@@ -1,0 +1,50 @@
+.button__bar {
+    display: inline-block;
+    vertical-align: middle;
+    margin: auto;
+    padding: 0;
+    border-radius: 40px;
+    text-align: center;
+    position: absolute;
+    bottom: 20px;
+    left: 20px
+}
+
+.button__bar li {
+    list-style: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 0;
+}
+
+.button__bar li button {
+    background: #504f4f;
+    color: transparent;
+    cursor: pointer;
+    display: block;
+    height: 8px;
+    width: 8px;
+    border-radius: 4px;
+}
+
+.button__bar li.slick-active button {
+    background-color: #552A92;
+}
+
+@media (max-width: 640px) {
+
+    /* Your CSS code for the breakpoint */
+    .button__bar {
+        display: flex !important;
+        flex-direction: column;
+        gap: 8px;
+        left: auto;
+        right: 10px;
+        bottom: 30px;
+    }
+
+    .button__bar li button {
+        background: #ffffff;
+    }
+}
