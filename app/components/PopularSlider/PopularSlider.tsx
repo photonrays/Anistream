@@ -3,9 +3,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import PopularCard from "../PopularCard";
 import "./PopularSlider.css";
+import { IAnimeResult, ISearch } from "@consumet/extensions";
 
 
-export default function PopularSlider() {
+export default function PopularSlider({ animes }: { animes?: ISearch<IAnimeResult> }) {
     var settings = {
         dots: true,
         infinite: true,
@@ -17,14 +18,7 @@ export default function PopularSlider() {
     };
     return (
         <Slider {...settings} className="relative">
-            <PopularCard />
-            <PopularCard />
-            <PopularCard />
-            <PopularCard />
-            <PopularCard />
-            <PopularCard />
-            <PopularCard />
-            <PopularCard />
+            {animes?.results?.map((anime, index) => (<PopularCard key={index} anime={anime} />))}
         </Slider>
     )
 }

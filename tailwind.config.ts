@@ -31,8 +31,18 @@ const config: Config = {
     themes: {
       dark: {
         colors: {
+          default: {
+            DEFAULT: "#666666",
+            foreground: "#AAAAAA",
+            background: "#0e0e0e",
+          },
           primary: {
             DEFAULT: "#5A2E98",
+            foreground: "#AAAAAA",
+            background: "#0e0e0e",
+          },
+          secondary: {
+            DEFAULT: "#8F7003",
             foreground: "#AAAAAA",
             background: "#0e0e0e",
           },
