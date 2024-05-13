@@ -1,7 +1,7 @@
 import { Card, CardBody, Chip, Image } from '@nextui-org/react'
 import { Icon } from '@iconify/react';
 import React from 'react'
-import { IAnimeInfo } from '@consumet/extensions';
+import { IAnimeInfo } from '../services/consumet/types';
 
 export default function TopCard({ anime, ranking }: { anime: IAnimeInfo, ranking: number }) {
     return (

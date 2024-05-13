@@ -1,45 +1,26 @@
 'use client';
-import { Tabs, Tab, Button } from "@nextui-org/react";
-import { Icon } from '@iconify/react';
+import { Tabs, Tab, Button, Skeleton } from "@nextui-org/react";
 import PopularSlider from "./components/PopularSlider/PopularSlider";
-import Cover from "../assets/cover.png";
-import { StaticImageData } from "next/image";
 import Card from "./components/Card";
-import { useEffect, useState } from "react";
 import TopCard from "./components/TopCard";
 import DetailCard from "./components/DetailCard";
-import { getAnimeRecentEpisodes, getTrendingAnime, getSearchAnime, getTopAnime, getNewReleases } from "./services/consumet/anilist/anilist.server";
-import { IAnimeInfo, ISearch } from "@consumet/extensions";
-import useTrendingAnime from "./hooks/useTrendingAnime";
-import useRecentEpisodes from "./hooks/useRecentEpisodes";
-import useTopAnime from "./hooks/useTopAnime";
-
-interface Fruit {
-  title: string;
-  img: StaticImageData;
-}
+import { getAnimeRecentEpisodes, getTopAnime, getTrendingAnime, getRecentlyAdded, getTopUpcoming, getLatestComplete } from "./services/consumet/api";
+import { useQuery } from "@tanstack/react-query";
+import { Suspense } from "react";
 
 export default function Home() {
-  const [liked, setLiked] = useState(false);
-  const [newRelease, setNewRelease] = useState<ISearch<IAnimeInfo>>();
-
-  const { data: tredingAnime } = useTrendingAnime();
-  const { data: recentEpisodes } = useRecentEpisodes(1);
-  const { data: topAnime } = useTopAnime();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getNewReleases();
-      console.log("new release: ", data)
-    }
-    fetchData()
-  }, []);
+  const { data: trendingAnime } = useQuery({ queryKey: ['anilist-trending-anime'], queryFn: () => getTrendingAnime() });
+  const { data: recentEpisodes } = useQuery({ queryKey: [`anilist-recent-episodes-${1}`], queryFn: () => getAnimeRecentEpisodes(1) })
+  const { data: topAnime } = useQuery({ queryKey: ['anilist-top-anime'], queryFn: () => getTopAnime() })
+  const { data: newAdded } = useQuery({ queryKey: ['anilist-new-added'], queryFn: () => getRecentlyAdded() })
+  const { data: topUpcoming } = useQuery({ queryKey: ['anilist-top-upcoming'], queryFn: () => getTopUpcoming() })
+  const { data: latestComplete } = useQuery({ queryKey: ['anilist-latest-complete'], queryFn: () => getLatestComplete() })
 
   const tabs = ['All', 'Sub', 'Dub', 'Movies', 'Trending']
 
   return (
     <main className="min-h-screen text-text-white sm:px-2 lg:px-4 flex flex-col gap-5">
-      <PopularSlider animes={tredingAnime} />
+      <PopularSlider animes={trendingAnime} />
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-[1fr_400px]">
 
@@ -61,75 +42,52 @@ export default function Home() {
           </div>
 
           <div className="sm:hidden">
-            <Tabs aria-label="Options" size="sm" radius="sm" color="primary" fullWidth={true}>
-              <Tab key="newRelease" title="New Release">
-                <div className="flex flex-col gap-3">
-                  <DetailCard />
-                  <DetailCard />
-                  <DetailCard />
-                  <DetailCard />
-                </div>
-              </Tab>
-              <Tab key="newAdded" title="New Added">
-                <div className="flex flex-col gap-3">
-                  <DetailCard />
-                  <DetailCard />
-                  <DetailCard />
-                  <DetailCard />
-                </div>
-              </Tab>
-              <Tab key="justComplete" title="Just Complete">
-                <div className="flex flex-col gap-3">
-                  <DetailCard />
-                  <DetailCard />
-                  <DetailCard />
-                  <DetailCard />
-                </div>
-              </Tab>
-            </Tabs>
+            <Suspense fallback={<p>Loading...</p>}>
+              <Tabs aria-label="Options" size="sm" radius="sm" color="primary" fullWidth={true}>
+                <Tab key="newAdded" title="New Added">
+                  <div className="flex flex-col gap-3">
+                    {newAdded && newAdded?.results?.slice(0, 5).map((anime, index) => <DetailCard key={index} anime={anime} />)}
+                  </div>
+                </Tab>
+                <Tab key="topUpcoming" title="Top Upcoming">
+                  <div className="flex flex-col gap-3">
+                    {topUpcoming?.results?.slice(0, 5).map((anime, index) => <DetailCard key={index} anime={anime} />)}
+                  </div>
+                </Tab>
+                <Tab key="justComplete" title="Just Complete">
+                  <div className="flex flex-col gap-3">
+                    {latestComplete?.results?.slice(0, 5).map((anime, index) => <DetailCard key={index} anime={anime} />)}
+                  </div>
+                </Tab>
+              </Tabs>
+            </Suspense>
           </div>
 
           <div className="hidden sm:grid grid-cols-1 2xl:grid-cols-3 gap-5">
-            <div>
-              <h2 className="text-xl font-semibold mb-2">New Release</h2>
-              <div className="grid grid-cols-2 2xl:grid-cols-1 gap-3">
-                <DetailCard />
-                <DetailCard />
-                <DetailCard />
-                <DetailCard />
-                <DetailCard />
+            <Suspense fallback={<p>Loading ...</p>}>
+              <div>
+                <h2 className="text-xl font-semibold mb-2">New Added</h2>
+                <div className="grid grid-cols-2 2xl:grid-cols-1 gap-3">
+                  {newAdded?.results?.slice(0, 5).map((anime, index) => <DetailCard key={index} anime={anime} />)}
+                </div>
               </div>
-            </div>
 
-            <div>
-              <h2 className="text-xl font-semibold mb-2">New Added</h2>
-              <div className="grid grid-cols-2 2xl:grid-cols-1 gap-3">
-                <DetailCard />
-                <DetailCard />
-                <DetailCard />
-                <DetailCard />
-                <DetailCard />
+              <div>
+                <h2 className="text-xl font-semibold mb-2">Top Upcoming</h2>
+                <div className="grid grid-cols-2 2xl:grid-cols-1 gap-3">
+                  {topUpcoming?.results?.slice(0, 5).map((anime, index) => <DetailCard key={index} anime={anime} />)}
+                </div>
               </div>
-            </div>
 
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Just Complete</h2>
-              <div className="grid grid-cols-2 2xl:grid-cols-1 gap-3">
-                <DetailCard />
-                <DetailCard />
-                <DetailCard />
-                <DetailCard />
-                <DetailCard />
+              <div>
+                <h2 className="text-xl font-semibold mb-2">Just Complete</h2>
+                <div className="grid grid-cols-2 2xl:grid-cols-1 gap-3">
+                  {latestComplete?.results?.slice(0, 5).map((anime, index) => <DetailCard key={index} anime={anime} />)}
+                </div>
               </div>
-            </div>
+            </Suspense>
           </div>
 
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Estimated Schedule</h2>
-            <div className="">
-
-            </div>
-          </div>
         </div>
 
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card as NextCard, CardBody, CardFooter, Chip, Image, Skeleton } from '@nextui-org/react';
 import { Icon } from '@iconify/react';
-import { IAnimeInfo } from '@consumet/extensions';
 import { useRouter } from 'next/navigation';
+import { IAnimeInfo } from '../services/consumet/types';
 
 export default function Card({ anime }: { anime?: IAnimeInfo }) {
     const router = useRouter();
@@ -22,7 +22,7 @@ export default function Card({ anime }: { anime?: IAnimeInfo }) {
     );
 
     return (
-        <NextCard shadow="sm" radius='sm' isPressable onPress={() => router.push("/watch")}>
+        <NextCard shadow="sm" radius='sm' isPressable onPress={() => router.push(`/watch${anime.episodeId}`)}>
             <CardBody className="p-0 flex-grow-0">
                 <Image
                     shadow="sm"
