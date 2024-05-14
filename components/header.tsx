@@ -43,7 +43,7 @@ export default function Header() {
                     className="sm:hidden"
                 />
                 <NavbarBrand>
-                    <p className="font-bold text-inherit">Anistream</p>
+                    <Link href="/" className="font-bold text-inherit">Anistream</Link>
                 </NavbarBrand>
                 <NavbarContent className="hidden sm:flex gap-4" justify="center">
                     <Dropdown>

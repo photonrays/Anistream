@@ -1,6 +1,5 @@
-'use server'
-
 import { ANIME, META, PROVIDERS_LIST } from "@consumet/extensions"
+import { StreamingServers } from "./types";
 
 const anilist = new META.Anilist();
 const zoro = new ANIME.Zoro();
@@ -19,6 +18,7 @@ export const getAnimeAdvancedSearch = async (
     year?: number,
     status?: 'RELEASING' | 'NOT_YET_RELEASED' | 'FINISHED' | 'CANCELLED' | 'HIATUS',
 ) => {
+    'use server'
     const results = await anilist.advancedSearch(
         query,
         type,
@@ -36,21 +36,25 @@ export const getAnimeAdvancedSearch = async (
 };
 
 export const getTrendingAnime = async () => {
+    'use server'
     const results = await anilist.fetchTrendingAnime();
     return results;
 }
 
 export const getAnimeRecentEpisodes = async (page: number) => {
+    'use server'
     const results = await anilist.fetchRecentEpisodes(undefined, page);
     return results;
 }
 
 export const getTopAnime = async () => {
+    'use server'
     const results = await anilist.fetchPopularAnime();
     return results;
 }
 
 export const getAnimeSchedule = async () => {
+    'use server'
     const results = await anilist.fetchAiringSchedule();
     return results;
 }
@@ -91,7 +95,7 @@ const generateAnilistMeta = (provider?: string) => {
 
 export const getEpisodeSources = async (id: string, provider?: string) => {
     // const anilist = generateAnilistMeta(provider);
-    const results = await gogo.fetchEpisodeSources(id);
+    const results = await gogo.fetchEpisodeSources(id, StreamingServers.VidStreaming);
     return results;
 }
 

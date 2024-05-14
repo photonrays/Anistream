@@ -1,12 +1,16 @@
+'use client'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import PopularCard from "../PopularCard";
-import "./PopularSlider.css";
-import { IAnimeResult, ISearch } from "@consumet/extensions";
+import "./TrendingAnime.css";
+import { useQuery } from "@tanstack/react-query";
+import PopularCard from "@/components/PopularCard";
+import { IAnimeInfo, ISearch } from "@/services/consumet/types";
 
 
-export default function PopularSlider({ animes }: { animes?: ISearch<IAnimeResult> }) {
+export default function TrendingAnime({ animes }: { animes: ISearch<IAnimeInfo> }) {
+    // const { data: animes } = useQuery({ queryKey: ['anilist-trending'], queryFn: () => getTrendingAnime(), staleTime: 1000 * 60 * 60 * 24 * 7 })
+
     var settings = {
         dots: true,
         infinite: true,

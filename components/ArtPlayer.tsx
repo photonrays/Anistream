@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import Artplayer from "artplayer";
-import { Option } from "artplayer/types/option";
 import Hls from "hls.js";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
 
@@ -44,25 +43,25 @@ export default function Player({
             container: artRef.current,
             type: "m3u8",
             setting: true,
-            settings: [
-                {
-                    html: "Subtitle",
-                    width: 250,
-                    tooltip: "Indonesia1",
-                    selector: [
-                        {
-                            default: true,
-                            html: "Indonesia",
-                            url: "https://cc.2cdns.com/9e/2f/9e2f4b2d7a9581a4451e4816a6702a8b/ind-18.vtt",
-                        },
-                    ],
-                    onSelect: function (item, $dom, event) {
-                        console.info(item, $dom, event);
-                        art.subtitle.url = item.url;
-                        return item.html;
-                    },
-                },
-            ],
+            // settings: [
+            //     {
+            //         html: "Subtitle",
+            //         width: 250,
+            //         tooltip: "Indonesia1",
+            //         selector: [
+            //             {
+            //                 default: true,
+            //                 html: "Indonesia",
+            //                 url: "https://cc.2cdns.com/9e/2f/9e2f4b2d7a9581a4451e4816a6702a8b/ind-18.vtt",
+            //             },
+            //         ],
+            //         onSelect: function (item, $dom, event) {
+            //             console.info(item, $dom, event);
+            //             art.subtitle.url = item.url;
+            //             return item.html;
+            //         },
+            //     },
+            // ],
             hotkey: true,
             aspectRatio: true,
             autoSize: true,
