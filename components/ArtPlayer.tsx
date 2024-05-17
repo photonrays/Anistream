@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react";
-import Artplayer from "artplayer";
+'use client'
+import { memo, useEffect, useRef, useState } from "react";
+import Player from "artplayer";
 import Hls from "hls.js";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
 
-export default function Player({
+function ArtPlayer({
     option,
     getInstance,
     ...rest
@@ -38,30 +39,11 @@ export default function Player({
     }
 
     useEffect(() => {
-        const art = new Artplayer({
+        const art = new Player({
             ...option,
             container: artRef.current,
             type: "m3u8",
             setting: true,
-            // settings: [
-            //     {
-            //         html: "Subtitle",
-            //         width: 250,
-            //         tooltip: "Indonesia1",
-            //         selector: [
-            //             {
-            //                 default: true,
-            //                 html: "Indonesia",
-            //                 url: "https://cc.2cdns.com/9e/2f/9e2f4b2d7a9581a4451e4816a6702a8b/ind-18.vtt",
-            //             },
-            //         ],
-            //         onSelect: function (item, $dom, event) {
-            //             console.info(item, $dom, event);
-            //             art.subtitle.url = item.url;
-            //             return item.html;
-            //         },
-            //     },
-            // ],
             hotkey: true,
             aspectRatio: true,
             autoSize: true,
@@ -86,7 +68,6 @@ export default function Player({
         }
 
         art.on("ready", () => {
-            console.info(art.hls);
         });
 
         return () => {
@@ -98,3 +79,5 @@ export default function Player({
 
     return <div ref={artRef} {...rest}></div>;
 }
+
+export default ArtPlayer;

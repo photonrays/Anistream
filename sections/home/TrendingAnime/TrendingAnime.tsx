@@ -6,10 +6,11 @@ import "./TrendingAnime.css";
 import { useQuery } from "@tanstack/react-query";
 import PopularCard from "@/components/PopularCard";
 import { IAnimeInfo, ISearch } from "@/services/consumet/types";
+import { getTrendingAnime } from "@/services/consumet/api";
 
 
-export default function TrendingAnime({ animes }: { animes: ISearch<IAnimeInfo> }) {
-    // const { data: animes } = useQuery({ queryKey: ['anilist-trending'], queryFn: () => getTrendingAnime(), staleTime: 1000 * 60 * 60 * 24 * 7 })
+export default function TrendingAnime() {
+    const { data: animes } = useQuery({ queryKey: ['anilist-trending'], queryFn: () => getTrendingAnime(), staleTime: 1000 * 60 * 60 * 24 * 7 })
 
     var settings = {
         dots: true,

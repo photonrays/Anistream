@@ -1,11 +1,10 @@
-'use client'
 import React from 'react'
 import TopCard from '@/components/TopCard';
-import { useQuery } from '@tanstack/react-query';
 import { Button } from '@nextui-org/react';
-import { IAnimeInfo, ISearch } from '@/services/consumet/types';
+import { getAnimePopular } from '@/services/consumet/api';
 
-export default function TopAnime({ animes }: { animes: ISearch<IAnimeInfo> }) {
+export default async function TopAnime() {
+    const topAnimes = await getAnimePopular()
     return (
         <div className="block lg:ml-4">
             <div className="flex justify-between mb-2">
@@ -14,7 +13,7 @@ export default function TopAnime({ animes }: { animes: ISearch<IAnimeInfo> }) {
             </div>
 
             <div className="flex flex-col gap-3">
-                {animes?.results?.slice(0, 9).map((anime, index) => (<TopCard key={index} anime={anime} ranking={index + 1} />))}
+                {topAnimes?.results?.slice(0, 9).map((anime, index) => (<TopCard key={index} anime={anime} ranking={index + 1} />))}
             </div>
         </div>
     )

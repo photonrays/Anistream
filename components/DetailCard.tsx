@@ -1,3 +1,4 @@
+'use client'
 import { Card, CardBody, Chip, Image } from '@nextui-org/react'
 import { Icon } from '@iconify/react';
 import React from 'react'
