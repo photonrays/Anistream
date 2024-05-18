@@ -6,8 +6,6 @@ import { IAnimeInfo } from '../services/consumet/types';
 import Link from 'next/link';
 
 export default function Card({ anime }: { anime?: IAnimeInfo }) {
-    console.log(anime)
-
     if (!anime) return (
         <NextCard shadow="sm" radius='sm'>
             <CardBody className="p-0 flex-grow-0">
@@ -23,7 +21,7 @@ export default function Card({ anime }: { anime?: IAnimeInfo }) {
     );
 
     return (
-        <Link href={`/watch/${anime.id}${anime.episodeId}`}>
+        <Link href={{ pathname: `/watch/${anime.id}`, query: { episodeId: anime.episodeId.substring(1) } }}>
             <NextCard shadow="sm" radius='sm' isPressable>
                 <CardBody className="p-0 flex-grow-0">
                     <Image

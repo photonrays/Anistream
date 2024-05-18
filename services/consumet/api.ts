@@ -226,8 +226,8 @@ export const getAnimeInfo = (id: string) => {
 
 export const getAnimeEpisodeList = async (id: string, fetchFiller?: boolean) => {
     const results = await cachified({
-        key: `gogo-episode-${id}-${fetchFiller}`,
-        ttl: 1000 * 60 * 60 * 4,
+        key: `anilist-episode-${id}-${fetchFiller}`,
+        ttl: 1000 * 60 * 60,
         staleWhileRevalidate: 1000 * 60 * 60 * 24,
         cache: lru,
         getFreshValue: async () => {
@@ -245,7 +245,7 @@ export const getAnimeEpisodeList = async (id: string, fetchFiller?: boolean) => 
 
 export const getEpisodeServers = async (id: string) => {
     return cachified({
-        key: `anilist-episode-servers`,
+        key: `anilist-episode-servers-${id}`,
         ttl: 1000 * 60 * 60 * 24,
         staleWhileRevalidate: 1000 * 60 * 60 * 24 * 7,
         cache: lru,

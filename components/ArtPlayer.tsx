@@ -1,5 +1,5 @@
 'use client'
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef } from "react";
 import Player from "artplayer";
 import Hls from "hls.js";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
@@ -80,4 +80,4 @@ function ArtPlayer({
     return <div ref={artRef} {...rest}></div>;
 }
 
-export default ArtPlayer;
+export default memo(ArtPlayer);
