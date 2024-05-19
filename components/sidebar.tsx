@@ -1,9 +1,10 @@
 'use client'
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Sidebar({ isSidebarOpen, setIsSidebarOpen }: { isSidebarOpen: boolean, setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const currentUrl = window.location.href;
+    const currentUrl = usePathname()
 
     return (
         <div className={`fixed overflow-y-auto text-white w-[256px] h-screen bg-gray flex flex-col shrink-0 items-center gap-2 p-4 top-0 left-0 z-50 transition-all

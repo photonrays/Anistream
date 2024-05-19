@@ -1,4 +1,3 @@
-'use client'
 import { memo, useEffect, useRef } from "react";
 import Player from "artplayer";
 import Hls from "hls.js";

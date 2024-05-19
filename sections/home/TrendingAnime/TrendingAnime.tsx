@@ -10,10 +10,7 @@ import { getTrendingAnime } from "@/services/consumet/api";
 import { SpotlightAnime } from "@/services/aniwatch/types/anime";
 
 
-export default function TrendingAnime({ animes }: { animes: SpotlightAnime[] }) {
-    // const { data: animes } = useQuery({ queryKey: ['anilist-trending'], queryFn: () => getTrendingAnime(), staleTime: 1000 * 60 * 60 * 24 * 7 })
-    console.log(animes)
-
+export default function TrendingAnime({ animes }: { animes?: SpotlightAnime[] }) {
     var settings = {
         dots: true,
         infinite: true,

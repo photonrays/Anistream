@@ -1,3 +1,5 @@
+import { AnimeCategory } from "./parsers";
+
 export interface Anime {
   id: string | null;
   name: string | null;
@@ -9,6 +11,7 @@ export interface Anime {
     sub: number | null;
     dub: number | null;
   };
+  [x: string]: any;
 }
 
 type CommonAnimeProps = "id" | "name" | "poster";
@@ -38,6 +41,8 @@ export interface TrendingAnime
 export interface LatestEpisodeAnime extends Anime { }
 
 export interface TopUpcomingAnime extends Anime { }
+
+export interface LatestCompleteAnime extends AnimeCategory { }
 
 export interface TopAiringAnime extends MostPopularAnime { }
 

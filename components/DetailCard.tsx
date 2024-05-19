@@ -1,11 +1,10 @@
-'use client'
 import { Card, CardBody, Chip, Image } from '@nextui-org/react'
-import { Icon } from '@iconify/react';
 import React from 'react'
-import { IAnimeInfo } from '../services/consumet/types';
 import Link from 'next/link';
+import { Anime } from '@/services/aniwatch/types/anime';
+import Icon from './Icon';
 
-export default function DetailCard({ anime }: { anime: IAnimeInfo }) {
+export default function DetailCard({ anime }: { anime: Anime }) {
     return (
         <Link href={`/watch/${anime.id}`}>
             <Card
@@ -20,16 +19,16 @@ export default function DetailCard({ anime }: { anime: IAnimeInfo }) {
                                 className="object-cover h-[65px] w-[50px]"
                                 radius="sm"
                                 shadow="md"
-                                src={anime.image}
+                                src={anime.poster || '@/assets/no_image.jpg'}
                             />
                         </div>
                         <div className="ml-3">
                             {anime.relationType && <p className='text-xs mb-1'>{anime.relationType}</p>}
-                            <p className='text-text-white text-sm line-clamp-2 mb-1'>{typeof anime.title === 'string' ? anime.title : anime.title.english}</p>
+                            <p className='text-text-white text-sm line-clamp-2 mb-1'>{anime.name}</p>
                             <div className="flex items-center gap-1 justify-between">
                                 <div className='flex items-center gap-1'>
-                                    {anime.sub !== undefined && anime.sub !== null && <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1" />} color="primary" size="sm" radius="sm" className="pl-2 h-[21px]">{anime.sub}</Chip>}
-                                    {anime.episodes !== undefined && anime.episodes !== null && <Chip color="default" size="sm" radius="sm" className='h-[21px]'>{anime.episodes as unknown as string}</Chip>}
+                                    <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.sub || 0}</Chip>
+                                    <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.dub || 0}</Chip>
                                 </div>
                                 <p className="text-xs">{anime.type}</p>
                             </div>

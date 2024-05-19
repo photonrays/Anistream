@@ -1,10 +1,8 @@
-'use client'
 import React from 'react'
 import { Card as NextCard, CardBody, CardFooter, Chip, Image, Skeleton } from '@nextui-org/react';
-import { Icon } from '@iconify/react';
-import { IAnimeInfo } from '../services/consumet/types';
 import Link from 'next/link';
 import { Anime } from '@/services/aniwatch/types/anime';
+import Icon from './Icon';
 
 export default function Card({ anime }: { anime?: Anime }) {
     if (!anime) return (
@@ -38,9 +36,10 @@ export default function Card({ anime }: { anime?: Anime }) {
                         fallbackSrc='@/assets/no_image.jpg'
                     />
                 </CardBody>
-                <CardFooter className="text-small flex-col items-start text-text-white justify-start">
+                <CardFooter className="text-small flex-col items-start text-text-white justify-start px-2">
                     <div className="flex items-center gap-1 mb-1 w-full">
-                        {anime?.episodes?.sub && <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1" />} color="primary" size="sm" radius="sm" className="pl-2 h-[21px]">{anime.episodes.sub}</Chip>}
+                        <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.sub || 0}</Chip>
+                        <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.dub || 0}</Chip>
                         <p className="flex-1 text-right">{anime.type}</p>
                     </div>
                     <b className="text-left line-clamp-2">{anime.name || ''}</b>
