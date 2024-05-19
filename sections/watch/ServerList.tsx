@@ -1,7 +1,13 @@
 import { IEpisodeServer } from '@/services/consumet/types'
 import React, { memo } from 'react'
 
-function ServerList({ serverList, handleChangeServer, server }: { serverList?: IEpisodeServer[], handleChangeServer: any, server?: string }) {
+interface ServerListProps {
+    serverList?: IEpisodeServer[],
+    handleChangeServer: any,
+    server?: string
+}
+
+function ServerList({ serverList, handleChangeServer, server }: ServerListProps) {
     return (
         <div className="flex mt-5">
             <p className="mr-4">Servers:</p>

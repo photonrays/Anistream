@@ -5,7 +5,6 @@ import React from 'react'
 import { IAnimeInfo } from '../services/consumet/types';
 
 export default function TopCard({ anime, ranking }: { anime: IAnimeInfo, ranking: number }) {
-    console.log("anime: ", anime)
     return (
         <Card
             isBlurred

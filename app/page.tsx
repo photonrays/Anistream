@@ -1,11 +1,8 @@
-import { getAnimeRecentEpisodes, getTrendingAnime, getRecentlyAdded, getTopUpcoming, getLatestComplete, getAnimePopular } from "@/services/consumet/api";
 import TrendingAnime from "@/sections/home/TrendingAnime/TrendingAnime";
 import TopAnime from "@/sections/home/TopAnime";
 import RecentAnime from "@/sections/home/RecentAnime";
-import OtherAnimemb from "@/sections/home/OtherAnimemb";
 import OtherAnime from "@/sections/home/OtherAnime";
 import { Suspense } from "react";
-import { Skeleton } from "@nextui-org/react";
 import RecentAnimeLoading from "@/sections/home/RecentAnimeLoading";
 import TrendingAnimeLoading from "@/sections/home/TrendingAnime/TrendingAnimeLoading";
 
@@ -19,11 +16,11 @@ export default async function Home() {
       </div>
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-5">
-        <div>
+        <div className="w-full">
           <Suspense fallback={<RecentAnimeLoading />}>
             <RecentAnime />
           </Suspense>
-          {/* <OtherAnimemb newAdded={newAdded} latestComplete={latestComplete} topUpcoming={topUpcoming} /> */}
+
           <OtherAnime />
         </div>
 
