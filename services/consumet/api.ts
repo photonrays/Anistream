@@ -94,15 +94,37 @@ export const getTrendingAnime = () => {
     });
 }
 
-export const getAnimeRecentEpisodes = async (page: number) => {
+export const getGogoTrendingAnime = () => {
     return cachified({
-        key: `anilist-recent-episodes-${page}`,
+        key: `gogo-trending-anime`,
         cache: lru,
-        ttl: 1000 * 60 * 60,
-        staleWhileRevalidate: 1000 * 60 * 60 * 24,
+        ttl: 1000 * 60 * 60 * 24,
+        staleWhileRevalidate: 1000 * 60 * 60 * 24 * 7,
         async getFreshValue() {
             try {
-                const res = await anilist.fetchRecentEpisodes("gogoanime", page);
+                const res = await gogo.fetchTopAiring();
+                return res;
+            } catch (error) {
+                console.error(error);
+                return {
+                    currentPage: 0,
+                    hasNextPage: false,
+                    results: [],
+                };
+            }
+        },
+    });
+}
+
+export const getAnimeRecentEpisodes = async (page?: number) => {
+    return cachified({
+        key: `gogo-recent-episodes-${page}`,
+        cache: lru,
+        ttl: 1000 * 60 * 60,
+        staleWhileRevalidate: 1000 * 60 * 60,
+        async getFreshValue() {
+            try {
+                const res = await gogo.fetchRecentEpisodes(page);
                 return res;
             } catch (error) {
                 console.error(error);
@@ -116,15 +138,15 @@ export const getAnimeRecentEpisodes = async (page: number) => {
     })
 }
 
-export const getAnimePopular = (page?: number) => {
+export const getAnimePopular = () => {
     return cachified({
-        key: `anilist-popular-anime-${page}`,
+        key: `anilist-popular-anime`,
         ttl: 1000 * 60 * 60 * 24,
         staleWhileRevalidate: 1000 * 60 * 60 * 24 * 7,
         cache: lru,
         async getFreshValue() {
             try {
-                const res = await anilist.fetchPopularAnime(page);
+                const res = await anilist.fetchPopularAnime();
                 return res;
             } catch (error) {
                 console.error(error);

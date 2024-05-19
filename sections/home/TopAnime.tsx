@@ -1,15 +1,15 @@
 import React from 'react'
 import TopCard from '@/components/TopCard';
-import { Button } from '@nextui-org/react';
+import { Button, Link } from '@nextui-org/react';
 import { getAnimePopular } from '@/services/consumet/api';
 
 export default async function TopAnime() {
     const topAnimes = await getAnimePopular()
     return (
         <div className="block lg:ml-4">
-            <div className="flex justify-between mb-2">
+            <div className="flex justify-between mb-5 items-center">
                 <h2 className="text-xl font-semibold mb-2">Top anime</h2>
-                <Button color="primary" size="sm">View more</Button>
+                <Link href='/'><Button color="primary" size='sm'>View more</Button></Link>
             </div>
 
             <div className="flex flex-col gap-3">

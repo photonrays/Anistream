@@ -6,7 +6,6 @@ import { IAnimeInfo } from '../services/consumet/types';
 import Link from 'next/link';
 
 export default function DetailCard({ anime }: { anime: IAnimeInfo }) {
-    console.log(anime)
     return (
         <Link href={`/watch/${anime.id}`}>
             <Card
@@ -29,8 +28,8 @@ export default function DetailCard({ anime }: { anime: IAnimeInfo }) {
                             <p className='text-text-white text-sm line-clamp-2 mb-1'>{typeof anime.title === 'string' ? anime.title : anime.title.english}</p>
                             <div className="flex items-center gap-1 justify-between">
                                 <div className='flex items-center gap-1'>
-                                    {anime.episodes !== undefined && anime.episodes !== null && <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1" />} color="primary" size="sm" radius="sm" className="pl-2 h-[21px]">{anime.episodes as unknown as string}</Chip>}
-                                    {anime.sub !== undefined && anime.sub !== null && <Chip color="default" size="sm" radius="sm" className='h-[21px]'>{anime.sub}</Chip>}
+                                    {anime.sub !== undefined && anime.sub !== null && <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1" />} color="primary" size="sm" radius="sm" className="pl-2 h-[21px]">{anime.sub}</Chip>}
+                                    {anime.episodes !== undefined && anime.episodes !== null && <Chip color="default" size="sm" radius="sm" className='h-[21px]'>{anime.episodes as unknown as string}</Chip>}
                                 </div>
                                 <p className="text-xs">{anime.type}</p>
                             </div>

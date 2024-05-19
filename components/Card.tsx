@@ -4,8 +4,9 @@ import { Card as NextCard, CardBody, CardFooter, Chip, Image, Skeleton } from '@
 import { Icon } from '@iconify/react';
 import { IAnimeInfo } from '../services/consumet/types';
 import Link from 'next/link';
+import { Anime } from '@/services/aniwatch/types/anime';
 
-export default function Card({ anime }: { anime?: IAnimeInfo }) {
+export default function Card({ anime }: { anime?: Anime }) {
     if (!anime) return (
         <NextCard shadow="sm" radius='sm'>
             <CardBody className="p-0 flex-grow-0">
@@ -21,7 +22,7 @@ export default function Card({ anime }: { anime?: IAnimeInfo }) {
     );
 
     return (
-        <Link href={{ pathname: `/watch/${anime.id}`, query: { episodeId: anime.episodeId.substring(1) } }}>
+        <Link href={{ pathname: `/watch/${anime.id}` }} className='flex'>
             <NextCard shadow="sm" radius='sm' isPressable>
                 <CardBody className="p-0 flex-grow-0">
                     <Image
@@ -31,18 +32,18 @@ export default function Card({ anime }: { anime?: IAnimeInfo }) {
                         height="auto"
                         isZoomed={true}
                         className='object-cover w-full h-auto aspect-[3/4] hover:brightness-75 hover:scale-105 transition-transform duration-300 ease-in-out'
-                        title={typeof anime.title === 'string' ? anime.title : anime.title.english}
-                        alt={typeof anime.title === 'string' ? anime.title : anime.title.english}
-                        src={anime.image}
+                        title={anime.name || ''}
+                        alt={anime.name || ''}
+                        src={anime.poster || undefined}
+                        fallbackSrc='@/assets/no_image.jpg'
                     />
                 </CardBody>
                 <CardFooter className="text-small flex-col items-start text-text-white justify-start">
                     <div className="flex items-center gap-1 mb-1 w-full">
-                        <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1" />} color="primary" size="sm" radius="sm" className="pl-2 h-[21px]">{anime.episodeNumber}</Chip>
-                        {anime.totalEpisodes && <Chip color="default" size="sm" radius="sm" className='h-[21px]'>{anime.totalEpisodes}</Chip>}
+                        {anime?.episodes?.sub && <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1" />} color="primary" size="sm" radius="sm" className="pl-2 h-[21px]">{anime.episodes.sub}</Chip>}
                         <p className="flex-1 text-right">{anime.type}</p>
                     </div>
-                    <b className="text-left line-clamp-2">{typeof anime.title === 'string' ? anime.title : anime.title.english}</b>
+                    <b className="text-left line-clamp-2">{anime.name || ''}</b>
                 </CardFooter>
             </NextCard>
         </Link>

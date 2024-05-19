@@ -34,7 +34,7 @@ export default function Header() {
     return (
         <>
             {/* Sidebar */}
-            {/* <Sidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} /> */}
+            <Sidebar isSidebarOpen={isMenuOpen} setIsSidebarOpen={setIsMenuOpen} />
 
             {/* Header */}
             <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -125,7 +125,7 @@ export default function Header() {
                         </Button>
                     </NavbarItem>
                 </NavbarContent>
-                <NavbarMenu>
+                {/* <NavbarMenu>
                     {menuItems.map((item, index) => (
                         <NavbarMenuItem key={`${item}-${index}`}>
                             <Link
@@ -140,7 +140,7 @@ export default function Header() {
                             </Link>
                         </NavbarMenuItem>
                     ))}
-                </NavbarMenu>
+                </NavbarMenu> */}
             </Navbar>
         </>
     )
