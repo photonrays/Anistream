@@ -34,8 +34,7 @@ export default function Card({ anime }: { anime?: Anime }) {
                         classNames={{ wrapper: 'w-full h-auto aspect-[3/4] flex-1' }}
                         title={anime.name || ''}
                         alt={anime.name || ''}
-                        src={anime.poster || undefined}
-                        fallbackSrc='@/assets/no_image.jpg'
+                        src={anime.poster || '@/assets/no_image.jpg'}
                     />
                 </CardBody>
                 <CardFooter className="text-small flex-col items-start text-text-white justify-start px-2">
