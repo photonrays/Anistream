@@ -1,27 +1,38 @@
 import { ArtPlayer } from '@/components'
-import { ISource } from '@/services/consumet/types'
+import { AnimeEpisodesSources } from '@/services/aniwatch/types/parsers'
 import { CircularProgress } from '@nextui-org/react'
 import React from 'react'
 
 interface PlayerProps {
-    streamLink?: ISource,
-    handleGetInstance: any
+    streamSources?: AnimeEpisodesSources,
 }
 
-export default function Player({ streamLink, handleGetInstance }: PlayerProps) {
-    if (!streamLink) return (
+export default function Player({ streamSources }: PlayerProps) {
+    if (!streamSources) return (
         <div className="w-full h-auto aspect-video lg:w-[800px] flex justify-center items-center bg-gray">
             <CircularProgress size="lg" aria-label="Loading..." />
         </div>
     )
     return (
         <ArtPlayer
-            key={streamLink.sources[0].url}
+            key={streamSources.sources[0].url}
             option={{
-                url: streamLink?.sources.find((s) => s.quality === 'default')?.url,
+                url: streamSources.sources[0].url,
+                subtitle: {
+                    url:
+                        typeof streamSources.tracks !== "undefined"
+                            ? streamSources.tracks.find((sub) => sub.label === "English")?.file || ""
+                            : "",
+                    type: "vtt",
+                    style: {
+                        color: "#fff",
+                    },
+                    encoding: "utf-8",
+                },
             }}
+            subtitles={streamSources.tracks}
             className="w-full h-auto aspect-video lg:w-[800px]"
-            getInstance={handleGetInstance}
+            getInstance={() => { }}
         />
     )
 }

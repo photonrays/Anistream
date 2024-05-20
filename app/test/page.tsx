@@ -1,5 +1,5 @@
 'use client'
-import { getAnimeHomePage } from '@/services/aniwatch/api'
+import { getAnimeByCategory, getAnimeEpisodes, getAnimeHomePage, getAnimeInfoById } from '@/services/aniwatch/api'
 import React, { useEffect } from 'react'
 
 export default function Test() {
@@ -11,7 +11,34 @@ export default function Test() {
             } catch (error) {
                 console.log(error)
             }
-        })()
+        })();
+
+        (async () => {
+            try {
+                const data = await getAnimeInfoById("blue-archive-the-animation-19125")
+                console.log(data)
+            } catch (error) {
+                console.log(error)
+            }
+        })();
+
+        (async () => {
+            try {
+                const data = await getAnimeEpisodes("blue-archive-the-animation-19125")
+                console.log(data)
+            } catch (error) {
+                console.log(error)
+            }
+        })();
+
+        (async () => {
+            try {
+                const data = await getAnimeByCategory("recently-updated")
+                console.log(data)
+            } catch (error) {
+                console.log(error)
+            }
+        })();
     }, [])
 
 

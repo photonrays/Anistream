@@ -1,10 +1,10 @@
 import { Card, CardBody, Chip, Image } from '@nextui-org/react'
 import React from 'react'
 import Link from 'next/link';
-import { Anime } from '@/services/aniwatch/types/anime';
+import { Anime, RelatedAnime } from '@/services/aniwatch/types/anime';
 import Icon from './Icon';
 
-export default function DetailCard({ anime }: { anime: Anime }) {
+export default function DetailCard({ anime }: { anime: Anime | RelatedAnime }) {
     return (
         <Link href={`/watch/${anime.id}`}>
             <Card
@@ -23,7 +23,6 @@ export default function DetailCard({ anime }: { anime: Anime }) {
                             />
                         </div>
                         <div className="ml-3">
-                            {anime.relationType && <p className='text-xs mb-1'>{anime.relationType}</p>}
                             <p className='text-text-white text-sm line-clamp-2 mb-1'>{anime.name}</p>
                             <div className="flex items-center gap-1 justify-between">
                                 <div className='flex items-center gap-1'>

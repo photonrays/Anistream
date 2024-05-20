@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { use } from 'react'
 import { Card as NextCard, CardBody, CardFooter, Chip, Image, Skeleton } from '@nextui-org/react';
 import Link from 'next/link';
 import { Anime } from '@/services/aniwatch/types/anime';
@@ -20,8 +21,8 @@ export default function Card({ anime }: { anime?: Anime }) {
     );
 
     return (
-        <Link href={{ pathname: `/watch/${anime.id}` }} className='flex'>
-            <NextCard shadow="sm" radius='sm' isPressable>
+        <Link href={`/watch/${anime?.id}`} className='flex'>
+            <NextCard shadow="sm" radius='sm' isPressable className='w-full'>
                 <CardBody className="p-0 flex-grow-0">
                     <Image
                         shadow="sm"
@@ -30,6 +31,7 @@ export default function Card({ anime }: { anime?: Anime }) {
                         height="auto"
                         isZoomed={true}
                         className='object-cover w-full h-auto aspect-[3/4] hover:brightness-75 hover:scale-105 transition-transform duration-300 ease-in-out'
+                        classNames={{ wrapper: 'w-full h-auto aspect-[3/4] flex-1' }}
                         title={anime.name || ''}
                         alt={anime.name || ''}
                         src={anime.poster || undefined}

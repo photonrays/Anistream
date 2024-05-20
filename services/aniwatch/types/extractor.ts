@@ -7,9 +7,9 @@ export interface Video {
 }
 
 export interface Subtitle {
-  id?: string;
-  url: string;
-  lang: string;
+  kind: string;
+  file: string;
+  label: string;
 }
 
 export interface Intro {

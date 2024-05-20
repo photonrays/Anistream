@@ -5,7 +5,7 @@ export interface AnimeEpisodesSources {
     [k: string]: string;
   };
   intro?: Intro;
-  subtitles?: Subtitle[];
+  tracks?: Subtitle[];
   sources: Video[];
   download?: string;
   embedURL?: string;

@@ -1,88 +1,73 @@
 'use client'
 import ServerList from "@/sections/watch/ServerList";
-import { getAnimeEpisodeList, getAnimeInfo, getEpisodeServers, getEpisodeSources } from "@/services/consumet/api";
 import { ISource } from "@/services/consumet/types";
 import { useQueries } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import { use, useEffect, useState } from "react";
 import Player from "@/sections/watch/Player";
 import Episodes from "@/sections/watch/Episodes";
 import EpisodesMobile from "@/sections/watch/EpisodesMobile";
 import Related from "@/sections/watch/Related";
 import AnimeInfo from "@/sections/watch/AnimeInfo";
+import { getAnimeEpisodes, getAnimeEpisodesServers, getAnimeInfoById, getAnimeStreamSources } from "@/services/aniwatch/api";
+import { AnimeServers, DubEpisode, RawEpisode, SubEpisode } from "@/services/aniwatch/types/anime";
 
 interface WatchProps {
     params: {
         id: string,
     }
-    searchParams?: { [key: string]: string | string[] | undefined };
+    searchParams?: { ep: string };
+}
+
+export interface ServerProps {
+    serverName?: string
+    category?: string
 }
 
 export default function Watch({ params, searchParams }: WatchProps) {
     const router = useRouter()
-    const [episodeId, setEpisodeId] = useState<string | undefined>(searchParams?.episodeId as string || undefined)
-    const [server, setServer] = useState<string>()
-    const [streamLink, setStreamLink] = useState<ISource | undefined>(undefined)
-    const [player, setPlayer] = useState<Artplayer | null>(null)
+    const [episodeId, setEpisodeId] = useState<string | undefined>(searchParams?.ep ? `${params.id}?ep=${searchParams?.ep}` : undefined)
+    const [server, setServer] = useState<ServerProps>({ serverName: undefined, category: undefined })
+
     const [
-        { data: serverList },
         { data: episodeList },
-        { data: animeInfo }
+        { data: serverList },
+        { data: animeInfo },
+        { data: streamSources }
     ] = useQueries({
         queries: [
-            { queryKey: [`server-list-${episodeId}`], queryFn: () => getEpisodeServers(episodeId! as string), enabled: !!episodeId, staleTime: 1000 * 60 * 60 * 24 * 7 },
-            { queryKey: [`episode-list-${params.id}`], queryFn: () => getAnimeEpisodeList(params.id), staleTime: 1000 * 60 * 60 },
-            { queryKey: [`anime-info-${params.id}`], queryFn: () => getAnimeInfo(params.id), staleTime: 1000 * 60 * 60 * 24 },
+            { queryKey: [`anime-episodes-${params.id}`], queryFn: () => getAnimeEpisodes(params.id), staleTime: 1000 },
+            { queryKey: [`anime-servers-${episodeId}`], queryFn: () => getAnimeEpisodesServers(episodeId!), enabled: !!episodeId, staleTime: 1000 },
+            { queryKey: [`anime-info-${params.id}`], queryFn: () => getAnimeInfoById(params.id), staleTime: 1000 },
+            { queryKey: [`anime-stream-sources-${episodeId}-${server.serverName}-${server.category}`], queryFn: () => getAnimeStreamSources(episodeId!, server.serverName, server.category), enabled: !!episodeId && !!server.serverName && !!server.category, staleTime: 1000 }
         ],
     })
 
     useEffect(() => {
-        if (!episodeId && episodeList && episodeList.length > 0) {
-            setEpisodeId(episodeList[0].id)
+        if (episodeList && !episodeId) {
+            redirect(`/watch/${episodeList.episodes[episodeList.episodes.length - 1].episodeId}`)
         }
-    }, [episodeId, episodeList])
+    }, [episodeList])
 
     useEffect(() => {
-        if (searchParams?.episodeId) {
-            setEpisodeId(searchParams.episodeId as string)
-        }
-    }, [searchParams])
-
-    useEffect(() => {
-        if (serverList && serverList.length > 0 && !server) {
-            setServer(serverList[0].name)
-        }
-    }, [server, serverList])
-
-    useEffect(() => {
-        (async () => {
-            if (server) {
-                const streamLink = await getEpisodeSources(episodeId, server)
-                setStreamLink(streamLink)
+        if (serverList) {
+            if (serverList.sub && serverList.sub.length > 0) {
+                setServer({ serverName: serverList.sub[0].serverName, category: "sub" })
+            } else if (serverList.dub && serverList.dub.length > 0) {
+                setServer({ serverName: serverList.dub[0].serverName, category: "dub" })
+            } else if (serverList.raw && serverList.raw.length > 0) {
+                setServer({ serverName: serverList.raw[0].serverName, category: "raw" })
             }
-        })()
-    }, [episodeId, params.id, server])
-
-    const handleGetInstance = (instance: any) => {
-        setPlayer(instance)
-    };
-
-    const handleDestroy = () => {
-        if (player) {
-            player.destroy();
         }
-    };
+    }, [serverList])
 
     const handleChangeEpisode = (episodeId: string) => {
         setEpisodeId(episodeId)
-        setStreamLink(undefined)
-        router.push(`/watch/${params.id}?episodeId=${episodeId}`)
+        router.push(`/watch/${episodeId}`)
     }
 
-    const handleChangeServer = (server: string) => {
-        handleDestroy();
-        setStreamLink(undefined);
-        setServer(server);
+    const handleChangeServer = (server: SubEpisode | DubEpisode | RawEpisode, category: string) => {
+        setServer({ serverName: server.serverName, category });
     }
 
     return (
@@ -90,11 +75,11 @@ export default function Watch({ params, searchParams }: WatchProps) {
             <div className="w-full h-full p-4 grid grid-cols-1 lg:grid-cols-[800px_1fr] xl:grid-cols-[1fr_800px_1fr] gap-4 mb-4">
                 <Episodes episodeId={episodeId} episodeList={episodeList} handleChangeEpisode={handleChangeEpisode} />
                 <div>
-                    <Player streamLink={streamLink} handleGetInstance={handleGetInstance} />
+                    <Player streamSources={streamSources} />
                     <ServerList serverList={serverList} handleChangeServer={handleChangeServer} server={server} />
                     <EpisodesMobile episodeId={episodeId} episodeList={episodeList} handleChangeEpisode={handleChangeEpisode} />
                 </div>
-                <Related animeInfo={animeInfo} />
+                <Related animeInfo={animeInfo?.relatedAnimes} />
             </div>
             <AnimeInfo animeInfo={animeInfo} />
         </div>

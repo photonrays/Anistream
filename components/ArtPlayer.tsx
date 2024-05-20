@@ -2,14 +2,17 @@ import { memo, useEffect, useRef } from "react";
 import Player from "artplayer";
 import Hls from "hls.js";
 import artplayerPluginHlsQuality from "artplayer-plugin-hls-quality";
+import { Subtitle } from "@/services/aniwatch/types/extractor";
 
 function ArtPlayer({
     option,
     getInstance,
+    subtitles,
     ...rest
 }: {
     option: any;
     getInstance: (art: any) => void;
+    subtitles?: Subtitle[];
     className?: string;
 }) {
     const artRef = useRef<HTMLDivElement>(null);
@@ -42,6 +45,7 @@ function ArtPlayer({
             ...option,
             container: artRef.current,
             type: "m3u8",
+            volume: 1,
             setting: true,
             hotkey: true,
             aspectRatio: true,
@@ -57,6 +61,24 @@ function ArtPlayer({
                     auto: "Auto",
                 }),
             ],
+            settings: [
+                {
+                    html: "Subtitle",
+                    tooltip: "English",
+                    selector:
+                        subtitles?.map((sub) => ({
+                            default: sub.label === "English",
+                            html: sub.label,
+                            url: sub.file
+                        })),
+                    onSelect: function (item) {
+                        art.subtitle.switch(item.url, {
+                            name: item.html,
+                        });
+                        return item.html;
+                    }
+                }
+            ],
             customType: {
                 m3u8: playM3u8,
             },
@@ -65,6 +87,16 @@ function ArtPlayer({
         if (getInstance && typeof getInstance === "function") {
             getInstance(art);
         }
+
+        art.on("resize", () => {
+            art.subtitle.style({
+                fontSize: art.height * 0.05 + "px",
+            })
+        })
+
+        art.on("subtitleUpdate", (text) => {
+            art.template.$subtitle.innerHTML = text;
+        })
 
         art.on("ready", () => {
         });
