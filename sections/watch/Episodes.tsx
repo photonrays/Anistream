@@ -9,7 +9,7 @@ interface EpisodesProps {
 
 export default function Episodes({ episodeList, handleChangeEpisode, episodeId }: EpisodesProps) {
     return (
-        <div className="hidden xl:block">
+        <div className="hidden xl:block max-h-[500px] overflow-x-auto">
             {episodeList?.episodes?.map((episode, index) => {
                 if (!episode.episodeId) return null
                 return (

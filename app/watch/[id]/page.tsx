@@ -71,7 +71,7 @@ export default function Watch({ params, searchParams }: WatchProps) {
     }
 
     return (
-        <div className="w-full min-h-full">
+        <div className="w-full min-h-full pt-[72px]">
             <div className="w-full h-full p-4 grid grid-cols-1 lg:grid-cols-[800px_1fr] xl:grid-cols-[1fr_800px_1fr] gap-4 mb-4">
                 <Episodes episodeId={episodeId} episodeList={episodeList} handleChangeEpisode={handleChangeEpisode} />
                 <div>

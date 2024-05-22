@@ -1,5 +1,4 @@
-'use client'
-import React, { use } from 'react'
+import React from 'react'
 import { Card as NextCard, CardBody, CardFooter, Chip, Image, Skeleton } from '@nextui-org/react';
 import Link from 'next/link';
 import { Anime } from '@/services/aniwatch/types/anime';
@@ -39,8 +38,8 @@ export default function Card({ anime }: { anime?: Anime }) {
                 </CardBody>
                 <CardFooter className="text-small flex-col items-start text-text-white justify-start px-2">
                     <div className="flex items-center gap-1 mb-1 w-full">
-                        <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.sub || 0}</Chip>
-                        <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.dub || 0}</Chip>
+                        <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.sub}</Chip>
+                        {anime.episodes.dub && <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.dub}</Chip>}
                         <p className="flex-1 text-right">{anime.type}</p>
                     </div>
                     <b className="text-left line-clamp-2">{anime.name || ''}</b>

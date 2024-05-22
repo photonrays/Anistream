@@ -29,8 +29,8 @@ export default function TopCard({ anime }: { anime: Top10Anime }) {
                         <div className="ml-3">
                             <p className='text-text-white line-clamp-2 mb-1'>{anime.name}</p>
                             <div className="flex items-center gap-1">
-                                <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.sub || 0}</Chip>
-                                <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.dub || 0}</Chip>
+                                {anime.episodes.sub && <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.sub || 0}</Chip>}
+                                {anime.episodes.dub && <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.dub || 0}</Chip>}
                             </div>
                         </div>
                     </div>

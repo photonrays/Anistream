@@ -91,6 +91,7 @@ function ArtPlayer({
         art.on("resize", () => {
             art.subtitle.style({
                 fontSize: art.height * 0.05 + "px",
+                marginBottom: art.height * 0.05 + "px",
             })
         })
 
