@@ -30,7 +30,7 @@ export default function AnimeInfo({ animeInfo }: { animeInfo?: AnimeAboutInfo })
 
     if (!info) return (
         <div className='w-full h-[300px] flex gap-4 px-4'>
-            <Skeleton className='min-w-[142px] h-[200px] bg-gray rounded-md'></Skeleton>
+            <Skeleton className='min-w-[142px] h-[200px] bg-cgray rounded-md'></Skeleton>
 
             <div className="w-full flex-shrink flex-grow-0">
                 <Skeleton className='h-[21px] w-3/5 rounded-lg mb-2'></Skeleton>

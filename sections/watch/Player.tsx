@@ -9,7 +9,7 @@ interface PlayerProps {
 
 export default function Player({ streamSources }: PlayerProps) {
     if (!streamSources) return (
-        <div className="w-full h-auto aspect-video lg:w-[800px] flex justify-center items-center bg-gray">
+        <div className="w-full h-auto aspect-video lg:w-[800px] flex justify-center items-center bg-cgray">
             <CircularProgress size="lg" aria-label="Loading..." />
         </div>
     )

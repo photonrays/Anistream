@@ -18,7 +18,7 @@ export default function EpisodesMobile({ episodeList, handleChangeEpisode, episo
                         return (
                             <button onClick={() => handleChangeEpisode(episode.episodeId!)}
                                 key={index}
-                                className={`block ${episodeId === episode.episodeId ? 'bg-primary' : 'bg-gray'} text-white py-1 px-10 rounded-sm cursor-pointer`}
+                                className={`block ${episodeId === episode.episodeId ? 'bg-primary' : 'bg-cgray'} text-white py-1 px-10 rounded-sm cursor-pointer`}
                             >{episode.number}</button>
                         )
                     })}

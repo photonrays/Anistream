@@ -15,7 +15,7 @@ function ServerList({ serverList, handleChangeServer, server }: ServerListProps)
                 <p className="mr-4">Sub:</p>
                 <div className="flex flex-wrap gap-2 items-center">
                     {serverList.sub.map((s, index) => (
-                        <button onClick={() => handleChangeServer(s, "sub")} className={`${server?.category === 'sub' && server.serverName === s.serverName ? "bg-primary" : "bg-gray"} py-2 px-5 rounded-md text-sm`} key={index}>
+                        <button onClick={() => handleChangeServer(s, "sub")} className={`${server?.category === 'sub' && server.serverName === s.serverName ? "bg-primary" : "bg-cgray"} py-2 px-5 rounded-md text-sm`} key={index}>
                             {s.serverName}
                         </button>))}
                 </div >
@@ -24,7 +24,7 @@ function ServerList({ serverList, handleChangeServer, server }: ServerListProps)
                 <p className="mr-4">Dub:</p>
                 <div className="flex flex-wrap gap-2 items-center">
                     {serverList.dub.map((s, index) => (
-                        <button onClick={() => handleChangeServer(s, "dub")} className={`${server?.category === 'dub' && server?.serverName === s.serverName ? "bg-primary" : "bg-gray"} py-2 px-5 rounded-md text-sm`} key={index}>
+                        <button onClick={() => handleChangeServer(s, "dub")} className={`${server?.category === 'dub' && server?.serverName === s.serverName ? "bg-primary" : "bg-cgray"} py-2 px-5 rounded-md text-sm`} key={index}>
                             {s.serverName}
                         </button>))}
                 </div >
@@ -33,7 +33,7 @@ function ServerList({ serverList, handleChangeServer, server }: ServerListProps)
                 <p className="mr-4">Raw:</p>
                 <div className="flex flex-wrap gap-2 items-center">
                     {serverList.raw.map((s, index) => (
-                        <button onClick={() => handleChangeServer(s, "raw")} className={`${server?.category === 'raw' && server.serverName === s.serverName ? "bg-primary" : "bg-gray"} py-2 px-5 rounded-md text-sm`} key={index}>
+                        <button onClick={() => handleChangeServer(s, "raw")} className={`${server?.category === 'raw' && server.serverName === s.serverName ? "bg-primary" : "bg-cgray"} py-2 px-5 rounded-md text-sm`} key={index}>
                             {s.serverName}
                         </button>))}
                 </div >
