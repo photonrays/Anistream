@@ -1,7 +1,9 @@
 import cachified, { Cache, CacheEntry, totalTtl } from "@epic-web/cachified";
 import { LRUCache } from "lru-cache";
-import { AnimeAboutInfo, AnimeCategory, AnimeEpisodes, AnimeEpisodesSources, EpisodeServers, HomePage } from "./types/parsers";
+import { AnimeAboutInfo, AnimeCategory, AnimeEpisodes, AnimeEpisodesSources, AnimeSearchResult, AnimeSearchSuggestions, EpisodeServers, HomePage } from "./types/parsers";
 import { AnimeEpisode, AnimeServers, LatestCompleteAnime } from "./types/anime";
+import { AnimeSearchQueryParams } from "./types/controllers";
+import { buildQueryString } from "./util";
 
 const lruInstance = new LRUCache<string, CacheEntry>({ max: 1000 });
 
@@ -137,6 +139,46 @@ export const getAnimeStreamSources = async (episodeId: string, server?: string, 
                 const res = await fetch(`${ApiURL}anime/episode-srcs?id=${episodeId}&server=${_server}&category=${category || "sub"}`, { cache: 'no-store' });
                 const data = await res.json();
                 return data as AnimeEpisodesSources;
+            } catch (error) {
+                console.error(error);
+                return undefined;
+            }
+        },
+    });
+}
+
+export const getAnimeSearchSuggestions = async (query?: string) => {
+    if (!query || query == '') return null
+    return cachified({
+        key: `anime-search-suggestion-${query}`,
+        cache: lru,
+        ttl: 1000 * 60 * 60,
+        staleWhileRevalidate: 1000 * 60 * 60,
+        async getFreshValue() {
+            try {
+                const res = await fetch(`${ApiURL}anime/search/suggest?q=${query}`, { cache: 'no-store' });
+                const data = await res.json();
+                return data as AnimeSearchSuggestions;
+            } catch (error) {
+                console.error(error);
+                return undefined;
+            }
+        },
+    });
+}
+
+export const getAnimeAdvancedResults = async (options: any) => {
+    const query = buildQueryString(options);
+    return cachified({
+        key: `anime-advanced-search-${query}`,
+        cache: lru,
+        ttl: 1000 * 60 * 60,
+        staleWhileRevalidate: 1000 * 60 * 60,
+        async getFreshValue() {
+            try {
+                const res = await fetch(`${ApiURL}anime/search${query}`, { cache: 'no-store' });
+                const data = await res.json();
+                return data as AnimeSearchResult;
             } catch (error) {
                 console.error(error);
                 return undefined;
