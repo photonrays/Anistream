@@ -4,7 +4,7 @@ import RecentAnime, { RecentAnimeLoading } from "@/sections/home/RecentAnime";
 import OtherAnime, { OtherAnimeLoading } from "@/sections/home/OtherAnime";
 import { Suspense } from "react";
 
-export default async function Home() {
+export default function Home() {
   return (
     <main className="min-h-screen text-text-white flex flex-col pb-5">
       <div className="min-h-[400px] w-full mb-4">

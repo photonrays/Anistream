@@ -1,6 +1,6 @@
 import cachified, { Cache, CacheEntry, totalTtl } from "@epic-web/cachified";
 import { LRUCache } from "lru-cache";
-import { AnimeAboutInfo, AnimeCategory, AnimeEpisodes, AnimeEpisodesSources, AnimeSearchResult, AnimeSearchSuggestions, EpisodeServers, HomePage } from "./types/parsers";
+import { AnimeAboutInfo, AnimeCategory, AnimeEpisodes, AnimeEpisodesSources, AnimeSearchResult, AnimeSearchSuggestions, EpisodeServers, GenreAnime, HomePage } from "./types/parsers";
 import { AnimeEpisode, AnimeServers, LatestCompleteAnime } from "./types/anime";
 import { AnimeSearchQueryParams } from "./types/controllers";
 import { buildQueryString } from "./util";
@@ -46,7 +46,7 @@ export const getAnimeHomePage = async () => {
 
 export type AnimeCategoryType = "most-favorite" | "most-popular" | "subbed-anime" | "dubbed-anime" | "recently-updated" | "recently-added" | "top-upcoming" | "top-airing" | "movie" | "special" | "ova" | "ona" | "tv" | "completed";
 
-export const getAnimeByCategory = async (category: AnimeCategoryType, page?: number) => {
+export const getAnimeByCategory = async (category: AnimeCategoryType, page?: string) => {
     return cachified({
         key: `anime-by-category-${category}-${page || 1}`,
         cache: lru,
@@ -57,6 +57,25 @@ export const getAnimeByCategory = async (category: AnimeCategoryType, page?: num
                 const res = await fetch(`${ApiURL}anime/${category}?page=${page || 1}`, { cache: 'no-store' });
                 const data = await res.json();
                 return data as AnimeCategory;
+            } catch (error) {
+                console.error(error);
+                return undefined;
+            }
+        },
+    });
+}
+
+export const getAnimeByGenre = async (genre: string, page?: string) => {
+    return cachified({
+        key: `anime-by-genre-${genre}-${page || 1}`,
+        cache: lru,
+        ttl: 1000 * 60 * 60,
+        staleWhileRevalidate: 1000 * 60 * 60 * 24,
+        async getFreshValue() {
+            try {
+                const res = await fetch(`${ApiURL}anime/genre/${genre}?page=${page || 1}`, { cache: 'no-store' });
+                const data = await res.json();
+                return data as GenreAnime;
             } catch (error) {
                 console.error(error);
                 return undefined;

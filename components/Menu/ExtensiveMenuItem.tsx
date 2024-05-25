@@ -36,14 +36,14 @@ const ExtensiveMenuItem = ({ button, name, children }: Props) => {
     }
 
     return (
-        <motion.div
+        <div
             onClick={() => toggleMouse(true)}
             onMouseLeave={() => toggleMouse(false)}
-            className="flex p-2 relative rounded cursor-pointer stroke-[0.75] hover:stroke-neutral-100 stroke-neutral-400 text-neutral-400 hover:text-neutral-100 place-items-center gap-3 hover:bg-neutral-700/30 transition-colors duration-100"
+            className="flex py-3 border-b-1 border-dashed border-cgray relative cursor-pointer stroke-[0.75] hover:stroke-neutral-100 stroke-neutral-400 text-neutral-400 hover:text-neutral-100 place-items-center gap-3 hover:bg-neutral-700/30 transition-colors duration-100"
         >
             {button}
-            <div className="flex overflow-clip place-items-center justify-between w-full">
-                <p className="text-inherit truncate whitespace-nowrap tracking-wide">
+            <div className="flex overflow-clip place-items-center justify-between pr-2 w-full">
+                <p className="text-inherit truncate whitespace-nowrap tracking-wide font-semibold">
                     {name}
                 </p>
                 <Icon icon="entypo:chevron-right" />
@@ -57,10 +57,10 @@ const ExtensiveMenuItem = ({ button, name, children }: Props) => {
                     duration: 0.25,
                     ease: "easeInOut",
                 }}
-                className='rounded-xl absolute bg-black/90 backdrop-blur-md left-64 p-5'>
+                className='rounded-xl absolute bg-black/90 backdrop-blur-md left-64'>
                 {children}
             </motion.nav>
-        </motion.div>
+        </div>
     )
 }
 

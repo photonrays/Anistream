@@ -11,6 +11,7 @@ import Related from "@/sections/watch/Related";
 import AnimeInfo from "@/sections/watch/AnimeInfo";
 import { getAnimeEpisodes, getAnimeEpisodesServers, getAnimeInfoById, getAnimeStreamSources } from "@/services/aniwatch/api";
 import { AnimeServers, DubEpisode, RawEpisode, SubEpisode } from "@/services/aniwatch/types/anime";
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
 interface WatchProps {
     params: {
@@ -72,6 +73,11 @@ export default function Watch({ params, searchParams }: WatchProps) {
 
     return (
         <div className="w-full min-h-full pt-[72px]">
+            <Breadcrumbs className="ml-5 my-2">
+                <BreadcrumbItem href="/">Home</BreadcrumbItem>
+                <BreadcrumbItem>Watch</BreadcrumbItem>
+                <BreadcrumbItem href={`/watch/${params.id}`}>{animeInfo?.anime.info.name}</BreadcrumbItem>
+            </Breadcrumbs>
             <div className="w-full h-full p-4 grid grid-cols-1 lg:grid-cols-[800px_1fr] xl:grid-cols-[1fr_800px_1fr] gap-4 mb-4">
                 <Episodes episodeId={episodeId} episodeList={episodeList} handleChangeEpisode={handleChangeEpisode} />
                 <div>

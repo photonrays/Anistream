@@ -4,12 +4,11 @@ import Icon from '@/components/Icon'
 import { getAnimeAdvancedResults, getAnimeHomePage } from '@/services/aniwatch/api'
 import { AnimeSearchQueryParams } from '@/services/aniwatch/types/controllers'
 import { buildQueryString } from '@/services/aniwatch/util'
-import { getAnimeAdvancedSearch } from '@/services/consumet/api'
-import { Button, Pagination, Select, SelectItem } from '@nextui-org/react'
-import { useQueries, useQuery } from '@tanstack/react-query'
+import { BreadcrumbItem, Breadcrumbs, Button, CircularProgress, Pagination } from '@nextui-org/react'
+import { useQueries } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import { easeInOut, motion, useScroll, useTransform, useCycle } from 'framer-motion';
+import React, { useState } from 'react'
+import { motion, useCycle } from 'framer-motion';
 import { types, languages, rated, scores, seasons, sorts, statuses } from '@/data/anime'
 import CustomSelect from '@/components/CustomSelect'
 
@@ -21,7 +20,7 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
         { data: animeHome }
     ] = useQueries({
         queries: [
-            { queryKey: ['search', searchParams], queryFn: () => getAnimeAdvancedResults(searchParams) },
+            { queryKey: ['search', searchParams], queryFn: () => getAnimeAdvancedResults(searchParams), enabled: !!searchParams.q && searchParams.q !== '' },
             { queryKey: ['anime-home'], queryFn: () => getAnimeHomePage() },
         ],
     })
@@ -64,8 +63,13 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
 
     return (
         <div className="w-full px-5 min-h-screen pt-[72px]">
-            <button className="flex items-center gap-3 mb-5 cursor-pointer hover:text-primary-light" onClick={() => router.back()}> <Icon icon="ph:arrow-left-bold" width={24} /><h2 className="text-xl">Advanced search</h2></button>
-            <div className='flex w-full gap-2 items-center'>
+            {/* <button className="flex items-center gap-3 mb-5 cursor-pointer hover:text-primary-light" onClick={() => router.back()}> <Icon icon="ph:arrow-left-bold" width={24} /><h2 className="text-xl">Advanced search</h2></button> */}
+            <Breadcrumbs className="my-3">
+                <BreadcrumbItem href='/'>Home</BreadcrumbItem>
+                <BreadcrumbItem href='/search'>Search</BreadcrumbItem>
+            </Breadcrumbs>
+
+            <div className='flex w-full gap-2 items-center mb-3'>
                 <div className='w-full rounded-lg flex overflow-hidden bg-cgray border-2 border-transparent focus-within:border-primary ml-auto p-1'>
                     <form onSubmit={onFormSubmit} className='w-full'>
                         <input className="w-full bg-transparent outline-none text-sm p-2"
@@ -83,14 +87,15 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
                     <span>Show filter</span>
                 </Button>
             </div>
-            <div className='w-full mt-5'>
+
+            <div className='w-full'>
                 <motion.div
                     layout
-                    variants={{ open: { height: 'auto' }, close: { height: 0 } }}
+                    variants={{ open: { height: 'auto', marginBottom: '12px' }, close: { height: 0, marginBottom: 0 } }}
                     transition={{ ease: "easeInOut", duration: 0.2 }}
                     animate={showFilter ? "open" : "close"}
                     initial="close"
-                    className='overflow-hidden mb-3'
+                    className='overflow-hidden'
                 >
                     <div className='bg-cgray p-5 rounded-lg'>
                         <p className='font-semibold mb-2'>Filter</p>
@@ -105,16 +110,17 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
                         </div>
                         <p className='font-semibold mb-2 mt-5'>Genres</p>
                         <div className='flex flex-wrap w-full gap-3'>
-                            {animeHome?.genres.map((genre, idx) =>
-                                <Button
+                            {animeHome?.genres.map((genre, idx) => {
+                                const _genre = genre.toLowerCase().split(' ').join('-')
+                                return <Button
                                     size='sm'
                                     key={idx}
-                                    className={`${selectedGenres.includes(genre.toLowerCase()) ? 'bg-primary' : 'bg-zinc-800'}  hover:bg-primary`}
-                                    onClick={() => setGenres(prev => prev.includes(genre.toLowerCase()) ? prev.filter(g => g !== genre.toLowerCase()) : [...prev, genre.toLowerCase()])}
+                                    className={`${selectedGenres.includes(_genre) ? 'bg-primary' : 'bg-zinc-800'}  hover:bg-primary`}
+                                    onClick={() => setGenres(prev => prev.includes(_genre) ? prev.filter(g => g !== _genre) : [...prev, _genre])}
                                 >
                                     {genre}
                                 </Button>
-                            )}
+                            })}
                         </div>
                     </div>
                 </motion.div>
@@ -128,19 +134,29 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
                 </div>
             </div>
             <p className='mt-8 mb-4 font-semibold'>Search result for: <span className='italic text-primary-light'>{searchParams.q}</span></p>
-            {isLoading || !searchResults ? <div>Loading</div> : <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-3">
-                {searchResults?.animes.map((anime, idx) => <Card anime={anime} key={idx} />)}
-            </div>}
-            <div className='w-full flex justify-center mt-5'>
-                <Pagination
-                    total={searchResults?.totalPages || 1}
-                    initialPage={1}
-                    page={Number(searchParams.page) || 1}
-                    variant='light'
-                    showControls
-                    onChange={(p) => router.push(buildQueryString({ ...searchParams, page: p.toString() }))}
-                />
+            <div className='w-full flex flex-col items-center gap-5'>
+                {isLoading
+                    ? <CircularProgress aria-label="Loading..." />
+                    : (!searchResults
+                        ? <></>
+                        : (searchResults?.animes.length === 0
+                            ? <p>No results found!</p>
+                            : <>
+                                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-3">
+                                    {searchResults?.animes.map((anime, idx) => <Card anime={anime} key={idx} />)}
+                                </div>
+                                <Pagination
+                                    total={searchResults?.totalPages || 1}
+                                    initialPage={1}
+                                    page={Number(searchParams.page) || 1}
+                                    variant='light'
+                                    showControls
+                                    onChange={(p) => router.push(buildQueryString({ ...searchParams, page: p.toString() }))}
+                                />
+                            </>))
+                }
             </div>
+
         </div>
     )
 }

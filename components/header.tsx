@@ -8,6 +8,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useQuery } from '@tanstack/react-query';
 import { getAnimeSearchSuggestions } from '@/services/aniwatch/api';
 import { useRouter } from 'next/navigation';
+import { CircularProgress } from '@nextui-org/react';
 
 
 export default function Header() {
@@ -18,16 +19,18 @@ export default function Header() {
     const { data: searchResults, isLoading } = useQuery({ queryKey: [`search-${debouncedSearch}`], queryFn: () => getAnimeSearchSuggestions(debouncedSearch), enabled: !!debouncedSearch && debouncedSearch !== '' })
     const router = useRouter()
 
-    console.log(searchResults)
-
     const inputRef = useRef<HTMLInputElement>(null)
 
     const onFormSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        router.push(`/search?q=${search}`)
-        setSearch('')
-        inputRef.current?.blur()
-        setOpen(false)
+        if (search !== '') {
+            {
+                router.push(`/search?q=${search}`)
+                setSearch('')
+                inputRef.current?.blur()
+                setOpen(false)
+            }
+        }
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,13 +103,16 @@ export default function Header() {
                         <Icon icon="gravity-ui:magnifier" className='w-6 h-6 text-text-white group-hover:text-white' />
                     </button>
                     {isOpen && <div className='w-[50vw] min-h-[70px] overflow-auto bg-cgray absolute top-full right-5 rounded-md -mt-2 flex flex-col justify-center'>
-                        {searchResults && searchResults?.suggestions.length > 0
-                            ? <div className='w-full h-full'>
-                                {searchResults?.suggestions.map((anime, index) => <SearchCard key={index} anime={anime} />)}
-                                <Link href={`/`} className="flex items-center mx-3 pt-1 pb-2 hover:text-primary-light border-t-1 border-zinc-500 border-dashed"><span className="mr-2">Advanced search</span><Icon icon="ph:arrow-right-bold" /></Link>
-                            </div>
-                            : <div className='w-full h-full flex items-center justify-center'>Loading</div>
-                        }
+                        {isLoading
+                            ? <div className='w-full h-full flex items-center justify-center'><CircularProgress aria-label="Loading..." /></div>
+                            : (!searchResults
+                                ? <div className='ml-5 text-text-white text-sm'>Enter search query...</div>
+                                : (searchResults?.suggestions.length === 0
+                                    ? <div className='ml-5 text-text-white text-sm'>No results!</div>
+                                    : <div className='w-full h-full'>
+                                        {searchResults?.suggestions.map((anime, index) => <SearchCard key={index} anime={anime} />)}
+                                        <Link href={`/`} className="flex items-center mx-3 pt-1 pb-2 hover:text-primary-light border-t-1 border-zinc-500 border-dashed"><span className="mr-2">Advanced search</span><Icon icon="ph:arrow-right-bold" /></Link>
+                                    </div>))}
                     </div>}
                 </motion.div>
             </motion.div>
