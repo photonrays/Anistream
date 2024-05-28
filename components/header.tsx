@@ -74,7 +74,7 @@ export default function Header() {
 
     return (
         <>
-            {isOpen && <div className="w-full h-screen bg-black/40 backdrop-blur-sm fixed z-[97]" onClick={() => setOpen(false)}></div>}
+            {isOpen && <div className="w-full h-screen bg-background/40 backdrop-blur-sm fixed z-[97]" onClick={() => setOpen(false)}></div>}
             <motion.div
                 style={{ background, backdropFilter: filter, WebkitBackdropFilter: filter }}
                 className='w-full h-[72px] flex items-center justify-between fixed top-0 z-[98] py-2 pl-20 pr-5'
@@ -84,7 +84,7 @@ export default function Header() {
                     variants={containerVariants}
                     animate={isOpen ? "open" : "close"}
                     initial="close"
-                    className='rounded-lg flex overflow-hidden bg-cgray border-primary ml-auto p-1'>
+                    className='rounded-lg flex overflow-hidden bg-card border-primary ml-auto p-1'>
                     <form onSubmit={onFormSubmit} className='w-full'>
                         <motion.input
                             ref={inputRef}
@@ -99,19 +99,19 @@ export default function Header() {
                             }}
                         />
                     </form>
-                    <button className='p-1.5 rounded-lg group hover:bg-cgray' onClick={() => { setOpen(!isOpen); inputRef.current?.focus() }}>
-                        <Icon icon="gravity-ui:magnifier" className='w-6 h-6 text-text-white group-hover:text-white' />
+                    <button className='p-1.5 rounded-lg group hover:bg-card' onClick={() => { setOpen(!isOpen); inputRef.current?.focus() }}>
+                        <Icon icon="gravity-ui:magnifier" className='w-6 h-6 text-foreground group-hover:text-white' />
                     </button>
-                    {isOpen && <div className='w-[50vw] min-h-[70px] overflow-auto bg-cgray absolute top-full right-5 rounded-md -mt-2 flex flex-col justify-center'>
+                    {isOpen && <div className='w-[50vw] min-h-[70px] overflow-auto bg-card absolute top-full right-5 rounded-md -mt-2 flex flex-col justify-center'>
                         {isLoading
                             ? <div className='w-full h-full flex items-center justify-center'><CircularProgress aria-label="Loading..." /></div>
                             : (!searchResults
-                                ? <div className='ml-5 text-text-white text-sm'>Enter search query...</div>
+                                ? <div className='ml-5 foreground text-sm'>Enter search query...</div>
                                 : (searchResults?.suggestions.length === 0
-                                    ? <div className='ml-5 text-text-white text-sm'>No results!</div>
+                                    ? <div className='ml-5 foreground text-sm'>No results!</div>
                                     : <div className='w-full h-full'>
                                         {searchResults?.suggestions.map((anime, index) => <SearchCard key={index} anime={anime} />)}
-                                        <Link href={`/`} className="flex items-center mx-3 pt-1 pb-2 hover:text-primary-light border-t-1 border-zinc-500 border-dashed"><span className="mr-2">Advanced search</span><Icon icon="ph:arrow-right-bold" /></Link>
+                                        <Link href={`/`} className="flex items-center mx-3 pt-1 pb-2 hover:text-primary-light border-t-1 border-foreground-darker border-dashed"><span className="mr-2">Advanced search</span><Icon icon="ph:arrow-right-bold" /></Link>
                                     </div>))}
                     </div>}
                 </motion.div>

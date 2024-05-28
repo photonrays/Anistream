@@ -8,19 +8,18 @@ interface PlayerProps {
 }
 
 export default function Player({ streamSources }: PlayerProps) {
-    if (!streamSources) return (
-        <div className="w-full h-auto aspect-video lg:w-[800px] flex justify-center items-center bg-cgray">
+    if (!streamSources || streamSources.sources === undefined) return (
+        <div className="w-full h-auto aspect-video lg:w-[800px] flex justify-center items-center bg-card">
             <CircularProgress size="lg" aria-label="Loading..." />
         </div>
     )
     return (
         <ArtPlayer
-            key={streamSources.sources[0].url}
             option={{
-                url: streamSources.sources[0].url,
+                url: `http://localhost:8080/${streamSources?.sources?.[0].url}`,
                 subtitle: {
                     url:
-                        typeof streamSources.tracks !== "undefined"
+                        streamSources.tracks !== undefined
                             ? streamSources.tracks.find((sub) => sub.label === "English")?.file || ""
                             : "",
                     type: "vtt",

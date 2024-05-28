@@ -1,13 +1,13 @@
 import { AnimeEpisodes } from '@/services/aniwatch/types/parsers';
+import Link from 'next/link';
 import React from 'react'
 
 interface EpisodesMobileProps {
     episodeList?: AnimeEpisodes
-    handleChangeEpisode: (id: string) => void;
     episodeId?: string;
 }
 
-export default function EpisodesMobile({ episodeList, handleChangeEpisode, episodeId }: EpisodesMobileProps) {
+export default function EpisodesMobile({ episodeList, episodeId }: EpisodesMobileProps) {
     return (
         <div className="xl:hidden flex mt-5">
             {episodeList && <>
@@ -16,10 +16,10 @@ export default function EpisodesMobile({ episodeList, handleChangeEpisode, episo
                     {episodeList.episodes?.map((episode, index) => {
                         if (!episode.episodeId) return null
                         return (
-                            <button onClick={() => handleChangeEpisode(episode.episodeId!)}
+                            <Link href={`/watch/${episode.episodeId}`}
                                 key={index}
-                                className={`block ${episodeId === episode.episodeId ? 'bg-primary' : 'bg-cgray'} text-white py-1 px-10 rounded-sm cursor-pointer`}
-                            >{episode.number}</button>
+                                className={`block ${episodeId === episode.episodeId ? 'bg-primary' : 'bg-card'} text-white py-1 px-10 rounded-sm cursor-pointer`}
+                            >{episode.number}</Link>
                         )
                     })}
                 </div>

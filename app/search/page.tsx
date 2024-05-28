@@ -70,7 +70,7 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
             </Breadcrumbs>
 
             <div className='flex w-full gap-2 items-center mb-3'>
-                <div className='w-full rounded-lg flex overflow-hidden bg-cgray border-2 border-transparent focus-within:border-primary ml-auto p-1'>
+                <div className='w-full rounded-lg flex overflow-hidden bg-card border-2 border-transparent focus-within:border-primary ml-auto p-1'>
                     <form onSubmit={onFormSubmit} className='w-full'>
                         <input className="w-full bg-transparent outline-none text-sm p-2"
                             type="search"
@@ -78,8 +78,8 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
                             value={options.q}
                             onChange={handleChange} />
                     </form>
-                    <button className='p-1.5 rounded-lg group hover:bg-cgray'>
-                        <Icon icon="gravity-ui:magnifier" className='w-6 h-6 text-text-white group-hover:text-white' />
+                    <button className='p-1.5 rounded-lg group hover:bg-card'>
+                        <Icon icon="gravity-ui:magnifier" className='w-6 h-6 foreground group-hover:text-white' />
                     </button>
                 </div>
                 <Button color="primary" radius='sm' variant="solid" onClick={() => togglerFilter()} className='w-[150px] h-[45px]'>
@@ -97,7 +97,7 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
                     initial="close"
                     className='overflow-hidden'
                 >
-                    <div className='bg-cgray p-5 rounded-lg'>
+                    <div className='bg-card p-5 rounded-lg'>
                         <p className='font-semibold mb-2'>Filter</p>
                         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5'>
                             <CustomSelect label='Select anime type' types={types} type='type' value={options.type} handleSelectionChange={handleSelectionChange} />
@@ -111,11 +111,11 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
                         <p className='font-semibold mb-2 mt-5'>Genres</p>
                         <div className='flex flex-wrap w-full gap-3'>
                             {animeHome?.genres.map((genre, idx) => {
-                                const _genre = genre.toLowerCase().split(' ').join('-')
+                                const _genre = genre.replace(/\s/g, '-').toLowerCase();
                                 return <Button
                                     size='sm'
                                     key={idx}
-                                    className={`${selectedGenres.includes(_genre) ? 'bg-primary' : 'bg-zinc-800'}  hover:bg-primary`}
+                                    className={`${selectedGenres.includes(_genre) ? 'bg-primary' : 'bg-card-light'}  hover:bg-primary`}
                                     onClick={() => setGenres(prev => prev.includes(_genre) ? prev.filter(g => g !== _genre) : [...prev, _genre])}
                                 >
                                     {genre}

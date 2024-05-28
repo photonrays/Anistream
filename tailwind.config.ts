@@ -26,15 +26,15 @@ const config: Config = {
         "inner-2xl": "inset 0 25px 50px -12px rgb(0 0 0 / 0.25);"
       },
       colors: {
-        'primary': '#552A92',
-        'primary-light': '#7a3dd1',
-        'secondary': '#8F7003',
-        'black': '#0e0e0e',
-        'gray-light': '#666666',
-        'cgray': '#1C1C1C',
-        'text-white': '#AAAAAA',
-        'text-light-gray': '#818188',
-        'text-gray': '#515151',
+        'primary': 'rgba(var(--primary))',
+        'primary-light': 'rgba(var(--primary-light))',
+        'secondary': 'rgba(var(--secondary))',
+        'background': 'rgba(var(--background))',
+        'card': 'rgba(var(--card))',
+        'card-light': 'rgba(var(--card-light))',
+        'foreground': 'rgba(var(--foreground))',
+        'foreground-dark': 'rgba(var(--foreground-dark))',
+        'foreground-darker': 'rgba(var(--foreground-darker))',
       },
     },
   },
@@ -44,7 +44,7 @@ const config: Config = {
       dark: {
         colors: {
           default: {
-            DEFAULT: "#666666",
+            DEFAULT: "#1C1C1C",
             foreground: "#AAAAAA",
             background: "#0e0e0e",
           },

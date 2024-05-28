@@ -8,7 +8,7 @@ export default function SearchCard({ anime }: { anime?: AnimeSearchSuggestion })
     if (!anime) return null
     return (
         <Link href={`/watch/${anime.id}`} className='blockh-full w-full'>
-            <div className='flex gap-4 p-3 group hover:bg-zinc-800'>
+            <div className='flex gap-4 p-3 group hover:bg-card-light'>
                 <Image
                     shadow="sm"
                     radius="none"
@@ -20,8 +20,8 @@ export default function SearchCard({ anime }: { anime?: AnimeSearchSuggestion })
                 />
                 <div className='flex flex-col'>
                     <p className='font-bold line-clamp-1 group-hover:text-primary-light'>{anime.name}</p>
-                    <p className='text-sm text-text-light-gray mb-1 line-clamp-1'>{anime.jname}</p>
-                    <p className='text-sm text-text-light-gray flex items-center gap-[2px]'>
+                    <p className='text-sm text-foreground-darker mb-1 line-clamp-1'>{anime.jname}</p>
+                    <p className='text-sm text-foreground-darker flex items-center gap-[2px]'>
                         {anime.moreInfo?.[0]}
                         <Icon icon="mdi:dot" />
                         <span className='group-hover:text-primary-light'>{anime.moreInfo?.[1]}</span>

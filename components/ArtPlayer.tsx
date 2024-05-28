@@ -52,6 +52,7 @@ function ArtPlayer({
             autoSize: true,
             fullscreen: true,
             autoOrientation: true,
+            autoplayback: true,
             plugins: [
                 artplayerPluginHlsQuality({
                     control: false,
@@ -100,6 +101,7 @@ function ArtPlayer({
         })
 
         art.on("ready", () => {
+            art.play();
         });
 
         return () => {

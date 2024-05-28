@@ -1,16 +1,15 @@
 'use client'
 import ServerList from "@/sections/watch/ServerList";
-import { ISource } from "@/services/consumet/types";
 import { useQueries } from "@tanstack/react-query";
-import { redirect, useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 import Player from "@/sections/watch/Player";
 import Episodes from "@/sections/watch/Episodes";
 import EpisodesMobile from "@/sections/watch/EpisodesMobile";
 import Related from "@/sections/watch/Related";
 import AnimeInfo from "@/sections/watch/AnimeInfo";
 import { getAnimeEpisodes, getAnimeEpisodesServers, getAnimeInfoById, getAnimeStreamSources } from "@/services/aniwatch/api";
-import { AnimeServers, DubEpisode, RawEpisode, SubEpisode } from "@/services/aniwatch/types/anime";
+import { DubEpisode, RawEpisode, SubEpisode } from "@/services/aniwatch/types/anime";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
 interface WatchProps {
@@ -26,7 +25,6 @@ export interface ServerProps {
 }
 
 export default function Watch({ params, searchParams }: WatchProps) {
-    const router = useRouter()
     const [episodeId, setEpisodeId] = useState<string | undefined>(searchParams?.ep ? `${params.id}?ep=${searchParams?.ep}` : undefined)
     const [server, setServer] = useState<ServerProps>({ serverName: undefined, category: undefined })
 
@@ -45,10 +43,14 @@ export default function Watch({ params, searchParams }: WatchProps) {
     })
 
     useEffect(() => {
-        if (episodeList && !episodeId) {
+        if (!episodeId && episodeList && episodeList.episodes[episodeList.episodes.length - 1]?.episodeId) {
             redirect(`/watch/${episodeList.episodes[episodeList.episodes.length - 1].episodeId}`)
         }
-    }, [episodeList])
+    }, [episodeId, episodeList])
+
+    useEffect(() => {
+        setEpisodeId(searchParams?.ep ? `${params.id}?ep=${searchParams?.ep}` : undefined)
+    }, [searchParams])
 
     useEffect(() => {
         if (serverList) {
@@ -62,11 +64,6 @@ export default function Watch({ params, searchParams }: WatchProps) {
         }
     }, [serverList])
 
-    const handleChangeEpisode = (episodeId: string) => {
-        setEpisodeId(episodeId)
-        router.push(`/watch/${episodeId}`)
-    }
-
     const handleChangeServer = (server: SubEpisode | DubEpisode | RawEpisode, category: string) => {
         setServer({ serverName: server.serverName, category });
     }
@@ -79,11 +76,11 @@ export default function Watch({ params, searchParams }: WatchProps) {
                 <BreadcrumbItem href={`/watch/${params.id}`}>{animeInfo?.anime.info.name}</BreadcrumbItem>
             </Breadcrumbs>
             <div className="w-full h-full p-4 grid grid-cols-1 lg:grid-cols-[800px_1fr] xl:grid-cols-[1fr_800px_1fr] gap-4 mb-4">
-                <Episodes episodeId={episodeId} episodeList={episodeList} handleChangeEpisode={handleChangeEpisode} />
+                <Episodes episodeId={episodeId} episodeList={episodeList} />
                 <div>
-                    <Player streamSources={streamSources} />
+                    <Player key={`${episodeId}-${server.serverName}-${server.category}`} streamSources={streamSources} />
                     <ServerList serverList={serverList} handleChangeServer={handleChangeServer} server={server} />
-                    <EpisodesMobile episodeId={episodeId} episodeList={episodeList} handleChangeEpisode={handleChangeEpisode} />
+                    <EpisodesMobile episodeId={episodeId} episodeList={episodeList} />
                 </div>
                 <Related animeInfo={animeInfo?.relatedAnimes} />
             </div>

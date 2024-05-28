@@ -17,7 +17,7 @@ export default function CustomSelect({ label, types, type, value, handleSelectio
             size='sm'
             label={label}
             className="max-w-xs"
-            classNames={{ listboxWrapper: 'text-text-white' }}
+            classNames={{ listboxWrapper: 'foreground' }}
             selectedKeys={value ? [value] : []}
             onChange={e => handleSelectionChange(e, type)}
         >

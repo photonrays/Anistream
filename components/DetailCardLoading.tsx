@@ -5,7 +5,7 @@ export default function DetailCardLoading() {
     return (
         <Card
             isBlurred
-            className="border-none bg-background/60 dark:bg-default-100/50 text-text-white"
+            className="border-none bg-background/60 dark:bg-default-100/50 foreground"
             shadow="sm" >
             <CardBody className="p-2 justify-center">
                 <div className="grid grid-cols-[50px_1fr] items-center justify-center overflow-hidden">

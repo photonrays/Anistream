@@ -9,7 +9,7 @@ export default function TopCard({ anime }: { anime: Top10Anime }) {
         <Link href={`/watch/${anime.id}`} className='block'>
             <Card
                 isBlurred
-                className="border-none bg-background/60 dark:bg-default-100/50 text-text-white"
+                className="border-none bg-background/60 dark:bg-default-100/50 foreground"
                 shadow="sm" >
                 <CardBody className="p-1">
                     <div className="grid grid-cols-[50px_50px_1fr] items-center justify-center overflow-hidden">
@@ -27,7 +27,7 @@ export default function TopCard({ anime }: { anime: Top10Anime }) {
                             />
                         </div>
                         <div className="ml-3">
-                            <p className='text-text-white line-clamp-2 mb-1'>{anime.name}</p>
+                            <p className='foreground line-clamp-2 mb-1'>{anime.name}</p>
                             <div className="flex items-center gap-1">
                                 {anime.episodes.sub && <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.sub || 0}</Chip>}
                                 {anime.episodes.dub && <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.dub || 0}</Chip>}

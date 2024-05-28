@@ -1,6 +1,6 @@
 import cachified, { Cache, CacheEntry, totalTtl } from "@epic-web/cachified";
 import { LRUCache } from "lru-cache";
-import { AnimeAboutInfo, AnimeCategory, AnimeEpisodes, AnimeEpisodesSources, AnimeSearchResult, AnimeSearchSuggestions, EpisodeServers, GenreAnime, HomePage } from "./types/parsers";
+import { AnimeAboutInfo, AnimeCategory, AnimeEpisodes, AnimeEpisodesSources, AnimeSearchResult, AnimeSearchSuggestions, EpisodeServers, GenreAnime, HomePage, ProducerAnime } from "./types/parsers";
 import { AnimeEpisode, AnimeServers, LatestCompleteAnime } from "./types/anime";
 import { AnimeSearchQueryParams } from "./types/controllers";
 import { buildQueryString } from "./util";
@@ -38,7 +38,6 @@ export const getAnimeHomePage = async () => {
                 return data as HomePage;
             } catch (error) {
                 console.error(error);
-                return undefined;
             }
         },
     });
@@ -59,26 +58,44 @@ export const getAnimeByCategory = async (category: AnimeCategoryType, page?: str
                 return data as AnimeCategory;
             } catch (error) {
                 console.error(error);
-                return undefined;
             }
         },
     });
 }
 
 export const getAnimeByGenre = async (genre: string, page?: string) => {
+    const genreName = genre.replace(/\s/g, '-').toLowerCase();
     return cachified({
-        key: `anime-by-genre-${genre}-${page || 1}`,
+        key: `anime-by-genre-${genreName}-${page || 1}`,
         cache: lru,
         ttl: 1000 * 60 * 60,
         staleWhileRevalidate: 1000 * 60 * 60 * 24,
         async getFreshValue() {
             try {
-                const res = await fetch(`${ApiURL}anime/genre/${genre}?page=${page || 1}`, { cache: 'no-store' });
+                const res = await fetch(`${ApiURL}anime/genre/${genreName}?page=${page || 1}`, { cache: 'no-store' });
                 const data = await res.json();
                 return data as GenreAnime;
             } catch (error) {
                 console.error(error);
-                return undefined;
+            }
+        },
+    });
+}
+
+export const getProducerAnimes = async (producer: string, page?: string) => {
+    const producerName = producer.replace(/\s/g, '-').toLowerCase();
+    return cachified({
+        key: `anime-by-producer-${producerName}-${page || 1}`,
+        cache: lru,
+        ttl: 1000 * 60 * 60,
+        staleWhileRevalidate: 1000 * 60 * 60 * 24,
+        async getFreshValue() {
+            try {
+                const res = await fetch(`${ApiURL}anime/producer/${producerName}?page=${page || 1}`, { cache: 'no-store' });
+                const data = await res.json();
+                return data as ProducerAnime;
+            } catch (error) {
+                console.error(error);
             }
         },
     });
@@ -97,7 +114,6 @@ export const getAnimeInfoById = async (id: string) => {
                 return data as AnimeAboutInfo;
             } catch (error) {
                 console.error(error);
-                return undefined;
             }
         },
     });
@@ -116,7 +132,6 @@ export const getAnimeEpisodes = async (id: string) => {
                 return data as AnimeEpisodes;
             } catch (error) {
                 console.error(error);
-                return undefined;
             }
         },
     });
@@ -135,7 +150,6 @@ export const getAnimeEpisodesServers = async (episodeId: string) => {
                 return data as EpisodeServers;
             } catch (error) {
                 console.error(error);
-                return undefined;
             }
         },
     });
@@ -147,23 +161,16 @@ function isAnimeServer(value: string): value is AnimeServers {
 }
 
 export const getAnimeStreamSources = async (episodeId: string, server?: string, category?: string) => {
-    const _server = isAnimeServer(server || "vidstreaming") ? server : "vidstreaming"
-    return cachified({
-        key: `anime-stream-link-${episodeId}-${_server}-${category || "sub"}`,
-        cache: lru,
-        ttl: 1000 * 60 * 60,
-        staleWhileRevalidate: 1000 * 60 * 60,
-        async getFreshValue() {
-            try {
-                const res = await fetch(`${ApiURL}anime/episode-srcs?id=${episodeId}&server=${_server}&category=${category || "sub"}`, { cache: 'no-store' });
-                const data = await res.json();
-                return data as AnimeEpisodesSources;
-            } catch (error) {
-                console.error(error);
-                return undefined;
-            }
-        },
-    });
+    // const _server = isAnimeServer(server || "vidstreaming") ? server : "vidstreaming"
+    const _server = server === 'hd-1' ? 'vidstreaming' : (server === 'hd-2' ? 'vidcloud' : server)
+    try {
+        const res = await fetch(`${ApiURL}anime/episode-srcs?id=${episodeId}&server=${_server}&category=${category || "sub"}`, { cache: 'no-store' });
+        const data = await res.json();
+        return data as AnimeEpisodesSources;
+    } catch (error) {
+        console.error(error);
+        return undefined;
+    }
 }
 
 export const getAnimeSearchSuggestions = async (query?: string) => {
@@ -180,7 +187,6 @@ export const getAnimeSearchSuggestions = async (query?: string) => {
                 return data as AnimeSearchSuggestions;
             } catch (error) {
                 console.error(error);
-                return undefined;
             }
         },
     });
@@ -200,7 +206,6 @@ export const getAnimeAdvancedResults = async (options: any) => {
                 return data as AnimeSearchResult;
             } catch (error) {
                 console.error(error);
-                return undefined;
             }
         },
     });

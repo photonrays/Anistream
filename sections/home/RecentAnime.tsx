@@ -16,7 +16,7 @@ export function RecentAnimeLoading() {
                                 <div className="rounded-lg bg-default-300"></div>
                             </Skeleton>
                         </CardBody>
-                        <CardFooter className="text-small flex-col items-start text-text-white justify-start">
+                        <CardFooter className="text-small flex-col items-start foreground justify-start">
                             <Skeleton className="h-[21px] w-2/5 rounded-lg mb-2"></Skeleton>
                             <Skeleton className="h-[21px] w-full rounded-lg"></Skeleton>
                         </CardFooter>
@@ -39,7 +39,7 @@ export default async function RecentAnime() {
         <div className="mb-5 lg:mr-5">
             <div className='flex items-center justify-between mb-2'>
                 <h2 className="text-xl font-semibold">Recently Updated</h2>
-                <Link href='/'><Button color='primary' size='sm'>View more</Button></Link>
+                <Link href='/list?category=recently-updated'><Button color='primary' size='sm'>View more</Button></Link>
             </div>
             <CustomTab variant="underlined" tabs={{
                 All: <div className="gap-4 grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">

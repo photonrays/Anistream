@@ -9,4 +9,6 @@ export interface AnimeEpisodesSources {
   sources: Video[];
   download?: string;
   embedURL?: string;
+  status?: number;
+  message?: string;
 }

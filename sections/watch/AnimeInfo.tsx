@@ -1,27 +1,10 @@
 import { AnimeInfoDetail } from '@/components'
-import { FuzzyDate, IAnimeInfo } from '@/services/consumet/types'
 import { Chip, Image, Skeleton } from '@nextui-org/react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
 import { AnimeAboutInfo } from '@/services/aniwatch/types/parsers'
 import Icon from '@/components/Icon'
-
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-function formatDateObject(date?: FuzzyDate) {
-    if (!date || !date.day || !date.month || !date.year) {
-        return '?'
-    }
-    const monthIndex = date.month - 1; // Adjust for zero-based indexing
-
-    if (monthIndex < 0 || monthIndex >= months.length || !date.hasOwnProperty('year') || !date.hasOwnProperty('month') || !date.hasOwnProperty('day')) {
-        throw new Error('Invalid date object format. Requires properties: year, month, and day.');
-    }
-
-    return `${months[monthIndex]} ${date.day}, ${date.year}`;
-}
 
 export default function AnimeInfo({ animeInfo }: { animeInfo?: AnimeAboutInfo }) {
     const [descriptionExpand, setDescriptionExpand] = useState(false)
@@ -30,7 +13,7 @@ export default function AnimeInfo({ animeInfo }: { animeInfo?: AnimeAboutInfo })
 
     if (!info) return (
         <div className='w-full h-[300px] flex gap-4 px-4'>
-            <Skeleton className='min-w-[142px] h-[200px] bg-cgray rounded-md'></Skeleton>
+            <Skeleton className='min-w-[142px] h-[200px] bg-card rounded-md'></Skeleton>
 
             <div className="w-full flex-shrink flex-grow-0">
                 <Skeleton className='h-[21px] w-3/5 rounded-lg mb-2'></Skeleton>
@@ -54,7 +37,7 @@ export default function AnimeInfo({ animeInfo }: { animeInfo?: AnimeAboutInfo })
                 </div>
 
                 <div className="flex gap-1 items-center">
-                    {info.stats.quality && <Chip size="sm" className="text-text-white rounded-md px-1 h-[21px]">{info.stats.quality}</Chip>}
+                    {info.stats.quality && <Chip size="sm" className="foreground rounded-md px-1 h-[21px]">{info.stats.quality}</Chip>}
                     <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-1 h-[21px]">{info.stats.episodes.sub || 0}</Chip>
                     <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-1 h-[21px]">{info.stats.episodes.dub || 0}</Chip>
                 </div>
@@ -69,20 +52,32 @@ export default function AnimeInfo({ animeInfo }: { animeInfo?: AnimeAboutInfo })
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <div>
-                        <AnimeInfoDetail title="Type" detail={<Link href={'/'} className='text-primary brightness-150'>{info.stats.type}</Link>} />
-                        <AnimeInfoDetail title="Premiered" detail={<Link href={'/'} className='text-primary brightness-150'>{moreInfo?.premiered}</Link>} />
+                        <AnimeInfoDetail title="Type" detail={<p className='brightness-150'>{info.stats.type}</p>} />
+                        <AnimeInfoDetail title="Premiered" detail={<p className='brightness-150'>{moreInfo?.premiered}</p>} />
                         <AnimeInfoDetail title="Date aired" detail={<p>{moreInfo?.aired}</p>} />
                         <AnimeInfoDetail title="Status" detail={<p>{moreInfo?.status}</p>} />
-                        <AnimeInfoDetail title="Genres" detail={<div className="flex flex-wrap">
-                            {(moreInfo?.genres as string[]).map((genre, index) => (<Link href={'/'} className='text-primary brightness-150' key={index}>{genre},&nbsp;</Link>))}
+                        <AnimeInfoDetail title="Genres" detail={<div className="flex flex-wrap gap-1.5">
+                            {(moreInfo?.genres as string[]).map((genre, index) => (<Link href={`/list?genre=${genre.replace(/\s/g, '-').toLowerCase()}`} className='brightness-150' key={index}>
+                                <button className='px-2 py-[1px] border-1 border-card-light rounded-xl text-[13px] hover:text-primary-light'>{genre}</button>
+                            </Link>))}
                         </div>} />
                     </div>
                     <div>
                         <AnimeInfoDetail title="Rating" detail={<p>{info.stats.rating}</p>} />
                         <AnimeInfoDetail title="MAL score" detail={<p>{moreInfo?.malscore}</p>} />
                         <AnimeInfoDetail title="Durations" detail={<p>{info.stats.duration}</p>} />
-                        <AnimeInfoDetail title="Studios" detail={<p>{moreInfo?.studios}</p>} />
-                        <AnimeInfoDetail title="Producers" detail={<p>{typeof moreInfo?.producers !== undefined || null && (moreInfo?.producers as string[]).map((pro, index) => <p key={index}>{pro}</p>)}</p>} />
+                        <AnimeInfoDetail title="Studios" detail={<Link href={`/list?producer=${moreInfo?.studios}`} className='text-primary-light'>{moreInfo?.studios}</Link>} />
+                        <AnimeInfoDetail title="Producers" detail={<div className='flex flex-wrap'>
+                            {moreInfo?.producers !== undefined
+                                && (moreInfo?.producers as string[]).map((producer, index) => {
+                                    const producerName = producer.replace(/\s/g, '-').toLowerCase();
+                                    return (
+                                        <Link href={`/list?producer=${producerName}`} className='text-primary-light' key={index}>
+                                            {producer}{index !== (moreInfo?.producers.length || 0) - 1 && <span>,&nbsp;&nbsp;</span>}
+                                        </Link>
+                                    )
+                                })}
+                        </div>} />
                     </div>
                 </div>
             </div>

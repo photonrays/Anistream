@@ -34,8 +34,8 @@ export default async function TopAnime() {
     return (
         <div className="block lg:ml-4">
             <div className="flex justify-between items-center">
-                <h2 className="text-xl font-semibold mb-2">Top anime</h2>
-                <Link href='/'><Button color="primary" size='sm'>View more</Button></Link>
+                <h2 className="text-xl font-semibold mb-2">Popular anime</h2>
+                <Link href='/list?category=most-popular'><Button color="primary" size='sm'>View more</Button></Link>
             </div>
             <CustomTab variant="underlined" tabs={{
                 Day: <div className="flex flex-col gap-3">
