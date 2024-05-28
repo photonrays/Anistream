@@ -23,7 +23,7 @@ const lru: Cache = {
     },
 };
 
-const ApiURL = process.env.ANISTREAM_API_URL;
+const ApiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getAnimeHomePage = async () => {
     return cachified({
