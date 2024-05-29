@@ -37,7 +37,7 @@ export default function AnimeInfo({ animeInfo }: { animeInfo?: AnimeAboutInfo })
                 </div>
 
                 <div className="flex gap-1 items-center">
-                    {info.stats.quality && <Chip size="sm" className="foreground rounded-md px-1 h-[21px]">{info.stats.quality}</Chip>}
+                    {info.stats.quality && <Chip size="sm" className="text-foreground rounded-md px-1 h-[21px]">{info.stats.quality}</Chip>}
                     <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-1 h-[21px]">{info.stats.episodes.sub || 0}</Chip>
                     <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-1 h-[21px]">{info.stats.episodes.dub || 0}</Chip>
                 </div>

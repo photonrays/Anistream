@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground flex flex-col pb-5">
+    <div className="min-h-screen bg-background text-foreground flex flex-col pb-5">
       <div className="min-h-[400px] w-full mb-4">
         <Suspense fallback={<TrendingAnimeLoading />}>
           <TrendingAnime />
@@ -29,6 +29,6 @@ export default function Home() {
           <TopAnime />
         </Suspense>
       </div>
-    </main>
+    </div>
   );
 }

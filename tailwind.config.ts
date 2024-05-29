@@ -29,36 +29,59 @@ const config: Config = {
         'primary': 'rgba(var(--primary))',
         'primary-light': 'rgba(var(--primary-light))',
         'secondary': 'rgba(var(--secondary))',
-        'background': 'rgba(var(--background))',
         'card': 'rgba(var(--card))',
         'card-light': 'rgba(var(--card-light))',
+        'background': 'rgba(var(--background))',
         'foreground': 'rgba(var(--foreground))',
         'foreground-dark': 'rgba(var(--foreground-dark))',
         'foreground-darker': 'rgba(var(--foreground-darker))',
       },
     },
   },
-  darkMode: "class",
+  darkMode: ["class"],
   plugins: [nextui({
     themes: {
       dark: {
         colors: {
           default: {
-            DEFAULT: "#1C1C1C",
-            foreground: "#AAAAAA",
-            background: "#0e0e0e",
+            DEFAULT: "rgba(var(--card))",
+            // foreground: "rgba(var(--foreground))",
+            // background: "rgba(var(--card))",
           },
           primary: {
-            DEFAULT: "#7a3dd1",
-            foreground: "#AAAAAA",
-            background: "#0e0e0e",
+            DEFAULT: "rgba(var(--primary))",
+            // foreground: "rgba(var(--foreground))",
+            // background: "rgba(var(--background))",
           },
           secondary: {
-            DEFAULT: "#8F7003",
-            foreground: "#AAAAAA",
-            background: "#0e0e0e",
+            DEFAULT: "rgba(var(--secondary))",
+            // foreground: "rgba(var(--foreground))",
+            // background: "rgba(var(--background))",
           },
-          focus: "#5a2e98",
+          focus: "rgba(var(--primary-light))",
+        },
+        layout: {
+          hoverOpacity: 1,
+        },
+      },
+      light: {
+        colors: {
+          default: {
+            DEFAULT: "rgba(var(--card))",
+            // foreground: "rgba(var(--foreground))",
+            // background: "rgba(var(--background))",
+          },
+          primary: {
+            DEFAULT: "rgba(var(--primary))",
+            // foreground: "rgba(var(--foreground))",
+            // background: "rgba(var(--background))",
+          },
+          secondary: {
+            DEFAULT: "rgba(var(--secondary))",
+            // foreground: "rgba(var(--foreground))",
+            // background: "rgba(var(--background))",
+          },
+          focus: "rgba(var(--primary-light))",
         },
         layout: {
           hoverOpacity: 1,

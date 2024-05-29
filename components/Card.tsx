@@ -12,7 +12,7 @@ export default function Card({ anime }: { anime?: Anime }) {
                     <div className="rounded-lg bg-default-300"></div>
                 </Skeleton>
             </CardBody>
-            <CardFooter className="text-small flex-col items-start foreground justify-start">
+            <CardFooter className="text-small flex-col items-start bg-card justify-start">
                 <Skeleton className="h-[21px] w-2/5 rounded-lg mb-2"></Skeleton>
                 <Skeleton className="h-[21px] w-full rounded-lg"></Skeleton>
             </CardFooter>
@@ -20,8 +20,8 @@ export default function Card({ anime }: { anime?: Anime }) {
     );
 
     return (
-        <Link href={`/watch/${anime?.id}`} className='flex'>
-            <NextCard shadow="sm" radius='sm' isPressable className='w-full'>
+        <Link href={`/watch/${anime?.id}`} className='flex rounded-xl bg-background'>
+            <NextCard shadow="sm" radius='sm' isPressable className='w-full bg-card'>
                 <CardBody className="p-0 flex-grow-0">
                     <Image
                         shadow="sm"
@@ -36,7 +36,7 @@ export default function Card({ anime }: { anime?: Anime }) {
                         src={anime.poster || '@/assets/no_image.jpg'}
                     />
                 </CardBody>
-                <CardFooter className="text-small flex-col items-start foreground justify-start px-2">
+                <CardFooter className="text-small flex-col items-start bg-card justify-start px-2">
                     <div className="flex items-center gap-1 mb-1 w-full">
                         <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.sub}</Chip>
                         {anime.episodes.dub && <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.dub}</Chip>}

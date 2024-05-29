@@ -16,7 +16,7 @@ export function RecentAnimeLoading() {
                                 <div className="rounded-lg bg-default-300"></div>
                             </Skeleton>
                         </CardBody>
-                        <CardFooter className="text-small flex-col items-start foreground justify-start">
+                        <CardFooter className="text-small flex-col items-start text-foreground justify-start">
                             <Skeleton className="h-[21px] w-2/5 rounded-lg mb-2"></Skeleton>
                             <Skeleton className="h-[21px] w-full rounded-lg"></Skeleton>
                         </CardFooter>

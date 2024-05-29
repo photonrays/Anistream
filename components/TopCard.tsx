@@ -6,10 +6,10 @@ import Link from 'next/link';
 
 export default function TopCard({ anime }: { anime: Top10Anime }) {
     return (
-        <Link href={`/watch/${anime.id}`} className='block'>
+        <Link href={`/watch/${anime.id}`} className='bg-card/60 rounded-xl'>
             <Card
                 isBlurred
-                className="border-none bg-background/60 dark:bg-default-100/50 foreground"
+                className="border-none bg-card/60 text-foreground"
                 shadow="sm" >
                 <CardBody className="p-1">
                     <div className="grid grid-cols-[50px_50px_1fr] items-center justify-center overflow-hidden">
@@ -27,7 +27,7 @@ export default function TopCard({ anime }: { anime: Top10Anime }) {
                             />
                         </div>
                         <div className="ml-3">
-                            <p className='foreground line-clamp-2 mb-1'>{anime.name}</p>
+                            <p className='text-foreground line-clamp-2 mb-1'>{anime.name}</p>
                             <div className="flex items-center gap-1">
                                 {anime.episodes.sub && <Chip startContent={<Icon icon="bi:badge-cc-fill" className="text-lg mr-1 ml-1" />} color="primary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.sub || 0}</Chip>}
                                 {anime.episodes.dub && <Chip startContent={<Icon icon="ion:mic" className="text-lg" />} color="secondary" size="sm" radius="sm" className="px-0 h-[21px]">{anime.episodes.dub || 0}</Chip>}

@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function loading() {
     return (
-        <main className="min-h-screen foreground sm:px-2 lg:px-4 flex flex-col gap-5">
+        <main className="min-h-screen text-foreground sm:px-2 lg:px-4 flex flex-col gap-5">
             <Skeleton className='w-full h-[400px]'></Skeleton>
 
             <div className="w-full grid grid-cols-1 lg:grid-cols-[1fr_400px]">
@@ -17,7 +17,7 @@ export default function loading() {
                                             <div className="rounded-lg bg-default-300"></div>
                                         </Skeleton>
                                     </CardBody>
-                                    <CardFooter className="text-small flex-col items-start foreground justify-start">
+                                    <CardFooter className="text-small flex-col items-start text-foreground justify-start">
                                         <Skeleton className="h-[21px] w-2/5 rounded-lg mb-2"></Skeleton>
                                         <Skeleton className="h-[21px] w-full rounded-lg"></Skeleton>
                                     </CardFooter>

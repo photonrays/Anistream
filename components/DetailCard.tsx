@@ -6,10 +6,10 @@ import Icon from './Icon';
 
 export default function DetailCard({ anime }: { anime: Anime | RelatedAnime }) {
     return (
-        <Link href={`/watch/${anime.id}`}>
+        <Link href={`/watch/${anime.id}`} className='bg-card/60 rounded-xl'>
             <Card
                 isBlurred
-                className="border-none bg-background/60 dark:bg-default-100/50 foreground"
+                className="border-none bg-card/60 text-foreground"
                 shadow="sm" >
                 <CardBody className="p-2 justify-center">
                     <div className="grid grid-cols-[50px_1fr] items-center justify-center overflow-hidden">
@@ -23,7 +23,7 @@ export default function DetailCard({ anime }: { anime: Anime | RelatedAnime }) {
                             />
                         </div>
                         <div className="ml-3">
-                            <p className='foreground text-sm line-clamp-2 mb-1'>{anime.name}</p>
+                            <p className='text-foreground text-sm line-clamp-2 mb-1'>{anime.name}</p>
                             <div className="flex items-center gap-1 justify-between">
                                 <div className='flex items-center gap-1'>
                                     {!anime.episodes.sub && !anime.episodes.sub && <p className='text-foreground-dark text-sm'>Coming soon</p>}

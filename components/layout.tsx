@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Menu />
             <section className="flex flex-col w-full h-full min-h-screen gap-5 dark text-foreground bg-background">
                 <Header />
-                <div className='bg-background text-white flex-1'>{children}</div>
+                <div className='bg-background text-foreground flex-1'>{children}</div>
                 <Footer />
             </section>
         </main>

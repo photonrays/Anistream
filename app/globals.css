@@ -20,24 +20,25 @@ html ::-webkit-scrollbar-track {
 }
 
 /* Theme */
-.dark {
-  --background: 14, 14, 14;
-  --foreground: 170, 170, 170;
-  --foreground-dark: 81, 81, 81;
-  --foreground-darker: 129, 129, 136;
-  --card: 28, 28, 28;
-  --card-light: 39, 39, 42;
+.light {
+  --background: 241, 241, 241;
+  --foreground: 85, 85, 85;
+  --foreground-dark: 174, 174, 174;
+  --foreground-darker: 126, 126, 119;
+  --card: 235, 235, 235;
+  --card-light: 224, 224, 221;
   --primary: 85, 42, 146;
   --primary-light: 122, 61, 209;
   --secondary: 143, 112, 3;
 }
 
-.light {
-  --background: 255, 255, 255;
+.dark,
+[data-theme="dark"] {
+  --background: 14, 14, 14;
   --foreground: 170, 170, 170;
   --foreground-dark: 81, 81, 81;
   --foreground-darker: 129, 129, 136;
-  --card: 255, 255, 255;
+  --card: 28, 28, 28;
   --card-light: 39, 39, 42;
   --primary: 85, 42, 146;
   --primary-light: 122, 61, 209;

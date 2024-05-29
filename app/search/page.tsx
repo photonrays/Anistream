@@ -79,7 +79,7 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
                             onChange={handleChange} />
                     </form>
                     <button className='p-1.5 rounded-lg group hover:bg-card'>
-                        <Icon icon="gravity-ui:magnifier" className='w-6 h-6 foreground group-hover:text-white' />
+                        <Icon icon="gravity-ui:magnifier" className='w-6 h-6 text-foreground group-hover:text-white' />
                     </button>
                 </div>
                 <Button color="primary" radius='sm' variant="solid" onClick={() => togglerFilter()} className='w-[150px] h-[45px]'>

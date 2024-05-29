@@ -16,7 +16,7 @@ export default function Episodes({ episodeList, episodeId }: EpisodesProps) {
                     <Link
                         href={`/watch/${episode.episodeId}`}
                         key={index}
-                        className={`${episodeId === episode.episodeId ? 'bg-primary' : 'odd:bg-default-50 even:bg-default-100'} flex text-white p-3 rounded-sm cursor-pointer overflow-hidden w-full`}
+                        className={`text-foreground ${episodeId === episode.episodeId ? 'bg-primary text-white' : 'odd:bg-card/35 even:bg-card'} flex p-3 rounded-sm cursor-pointer overflow-hidden w-full`}
                     >
                         <p className="line-clamp-1 text-sm text-start">{`${episode.number}:  ${episode.title || `Episode ${episode.number}`}`}</p>
                     </Link>

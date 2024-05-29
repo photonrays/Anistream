@@ -16,7 +16,7 @@ export const MenuToggle = ({ toggle }: { toggle: () => void }) => (
             viewBox="0 0 24 24"
             strokeWidth={1}
             stroke="currentColor"
-            className="w-8 h-8 stroke-neutral-200">
+            className="w-8 h-8 stroke-foreground">
             <Path
                 variants={{
                     close: { d: "M 2 2.5 L 20 2.5" },

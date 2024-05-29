@@ -18,7 +18,7 @@ export default function EpisodesMobile({ episodeList, episodeId }: EpisodesMobil
                         return (
                             <Link href={`/watch/${episode.episodeId}`}
                                 key={index}
-                                className={`block ${episodeId === episode.episodeId ? 'bg-primary' : 'bg-card'} text-white py-1 px-10 rounded-sm cursor-pointer`}
+                                className={`block text-foreground ${episodeId === episode.episodeId ? 'bg-primary text-white' : 'bg-card'} py-1 px-10 rounded-sm cursor-pointer`}
                             >{episode.number}</Link>
                         )
                     })}

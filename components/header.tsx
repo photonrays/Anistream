@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAnimeSearchSuggestions } from '@/services/aniwatch/api';
 import { useRouter } from 'next/navigation';
 import { CircularProgress } from '@nextui-org/react';
+import ThemeSwitcher from './ThemeSwitcher';
 
 
 export default function Header() {
@@ -41,7 +42,7 @@ export default function Header() {
     const background = useTransform(
         scrollY,
         [0, 72],
-        ["rgb(14 14 14 / 0)", "rgb(14 14 14 / 0.8)"],
+        ["rgb(var(--background) / 0)", "rgb(var(--background) / 0.8)"],
         { ease: easeInOut }
     )
 
@@ -80,41 +81,44 @@ export default function Header() {
                 className='w-full h-[72px] flex items-center justify-between fixed top-0 z-[98] py-2 pl-20 pr-5'
             >
                 <Link href={'/'} className='hidden sm:block'>Anistream</Link>
-                <motion.div
-                    variants={containerVariants}
-                    animate={isOpen ? "open" : "close"}
-                    initial="close"
-                    className='rounded-lg flex overflow-hidden bg-card border-primary ml-auto p-1'>
-                    <form onSubmit={onFormSubmit} className='w-full'>
-                        <motion.input
-                            ref={inputRef}
-                            name="search"
-                            className='w-full bg-transparent outline-none text-sm'
-                            placeholder='Search anime...'
-                            value={search}
-                            onChange={handleChange}
-                            variants={{
-                                open: { padding: '8px' },
-                                close: { padding: '0px' }
-                            }}
-                        />
-                    </form>
-                    <button className='p-1.5 rounded-lg group hover:bg-card' onClick={() => { setOpen(!isOpen); inputRef.current?.focus() }}>
-                        <Icon icon="gravity-ui:magnifier" className='w-6 h-6 text-foreground group-hover:text-white' />
-                    </button>
-                    {isOpen && <div className='w-[50vw] min-h-[70px] overflow-auto bg-card absolute top-full right-5 rounded-md -mt-2 flex flex-col justify-center'>
-                        {isLoading
-                            ? <div className='w-full h-full flex items-center justify-center'><CircularProgress aria-label="Loading..." /></div>
-                            : (!searchResults
-                                ? <div className='ml-5 foreground text-sm'>Enter search query...</div>
-                                : (searchResults?.suggestions.length === 0
-                                    ? <div className='ml-5 foreground text-sm'>No results!</div>
-                                    : <div className='w-full h-full'>
-                                        {searchResults?.suggestions.map((anime, index) => <SearchCard key={index} anime={anime} />)}
-                                        <Link href={`/`} className="flex items-center mx-3 pt-1 pb-2 hover:text-primary-light border-t-1 border-foreground-darker border-dashed"><span className="mr-2">Advanced search</span><Icon icon="ph:arrow-right-bold" /></Link>
-                                    </div>))}
-                    </div>}
-                </motion.div>
+                <div className='ml-auto flex relative gap-1'>
+                    <motion.div
+                        variants={containerVariants}
+                        animate={isOpen ? "open" : "close"}
+                        initial="close"
+                        className='rounded-lg flex overflow-hidden bg-card border-primary p-1'>
+                        <form onSubmit={onFormSubmit} className='w-full relative'>
+                            <motion.input
+                                ref={inputRef}
+                                name="search"
+                                className='w-full bg-transparent outline-none text-sm'
+                                placeholder='Search anime...'
+                                value={search}
+                                onChange={handleChange}
+                                variants={{
+                                    open: { padding: '8px' },
+                                    close: { padding: '0px' }
+                                }}
+                            />
+                        </form>
+                        <button className='p-1.5 rounded-lg group hover:bg-card' onClick={() => { setOpen(!isOpen); inputRef.current?.focus() }}>
+                            <Icon icon="gravity-ui:magnifier" className='w-6 h-6 text-foreground group-hover:text-white' />
+                        </button>
+                        {isOpen && <div className='z-[100] w-[50vw] min-h-[70px] overflow-auto bg-card absolute top-[125%] left-0 rounded-md -mt-2 flex flex-col justify-center'>
+                            {isLoading
+                                ? <div className='w-full h-full flex items-center justify-center'><CircularProgress aria-label="Loading..." /></div>
+                                : (!searchResults
+                                    ? <div className='ml-5 text-foreground text-sm'>Enter search query...</div>
+                                    : (searchResults?.suggestions.length === 0
+                                        ? <div className='ml-5 text-foreground text-sm'>No results!</div>
+                                        : <div className='w-full h-full'>
+                                            {searchResults?.suggestions.map((anime, index) => <SearchCard key={index} anime={anime} />)}
+                                            <Link href={`/`} className="flex items-center mx-3 pt-1 pb-2 hover:text-primary-light border-t-1 border-foreground-darker border-dashed"><span className="mr-2">Advanced search</span><Icon icon="ph:arrow-right-bold" /></Link>
+                                        </div>))}
+                        </div>}
+                    </motion.div>
+                    <ThemeSwitcher />
+                </div>
             </motion.div>
         </>
     )
