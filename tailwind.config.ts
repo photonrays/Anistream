@@ -38,25 +38,25 @@ const config: Config = {
       },
     },
   },
-  darkMode: ["class"],
+  darkMode: "class",
   plugins: [nextui({
     themes: {
       dark: {
         colors: {
           default: {
-            DEFAULT: "rgba(var(--card))",
-            // foreground: "rgba(var(--foreground))",
-            // background: "rgba(var(--card))",
+            // DEFAULT: "rgba(var(--card))",
+            foreground: "rgba(var(--foreground))",
+            // background: "rgba(var(--background))",
           },
           primary: {
             DEFAULT: "rgba(var(--primary))",
-            // foreground: "rgba(var(--foreground))",
-            // background: "rgba(var(--background))",
+            foreground: "rgba(170, 170, 170)",
+            background: "rgba(14, 14, 14)",
           },
           secondary: {
             DEFAULT: "rgba(var(--secondary))",
-            // foreground: "rgba(var(--foreground))",
-            // background: "rgba(var(--background))",
+            foreground: "rgba(170, 170, 170)",
+            background: "rgba(14, 14, 14)",
           },
           focus: "rgba(var(--primary-light))",
         },
@@ -67,19 +67,19 @@ const config: Config = {
       light: {
         colors: {
           default: {
-            DEFAULT: "rgba(var(--card))",
-            // foreground: "rgba(var(--foreground))",
+            // DEFAULT: "rgba(var(--card))",
+            foreground: "rgba(var(--foreground))",
             // background: "rgba(var(--background))",
           },
           primary: {
             DEFAULT: "rgba(var(--primary))",
-            // foreground: "rgba(var(--foreground))",
-            // background: "rgba(var(--background))",
+            foreground: "rgba(200, 200, 200)",
+            background: "rgba(14, 14, 14)",
           },
           secondary: {
             DEFAULT: "rgba(var(--secondary))",
-            // foreground: "rgba(var(--foreground))",
-            // background: "rgba(var(--background))",
+            foreground: "rgba(200, 200, 200)",
+            background: "rgba(14, 14, 14)",
           },
           focus: "rgba(var(--primary-light))",
         },

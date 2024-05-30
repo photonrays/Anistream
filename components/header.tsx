@@ -55,7 +55,8 @@ export default function Header() {
 
     const containerVariants = {
         close: {
-            width: "44px",
+            width: "40px",
+            padding: "0",
             borderWidth: "0px",
             transition: {
                 ease: "easeInOut",
@@ -64,6 +65,7 @@ export default function Header() {
         },
         open: {
             width: "50vw",
+            padding: "0 0 0 10px",
             borderWidth: "2px",
             transition: {
                 ease: "easeInOut",
@@ -80,28 +82,24 @@ export default function Header() {
                 style={{ background, backdropFilter: filter, WebkitBackdropFilter: filter }}
                 className='w-full h-[72px] flex items-center justify-between fixed top-0 z-[98] py-2 pl-20 pr-5'
             >
-                <Link href={'/'} className='hidden sm:block'>Anistream</Link>
-                <div className='ml-auto flex relative gap-1'>
+                <Link href={'/'} className='hidden sm:block text-foreground'>Anistream</Link>
+                <div className='ml-auto flex items-center relative gap-1'>
                     <motion.div
                         variants={containerVariants}
                         animate={isOpen ? "open" : "close"}
                         initial="close"
-                        className='rounded-lg flex overflow-hidden bg-card border-primary p-1'>
-                        <form onSubmit={onFormSubmit} className='w-full relative'>
-                            <motion.input
+                        className='rounded-lg flex items-center overflow-hidden bg-card border-primary h-full'>
+                        <form onSubmit={onFormSubmit} className='w-full h-full flex items-center relative'>
+                            <input
                                 ref={inputRef}
                                 name="search"
                                 className='w-full bg-transparent outline-none text-sm'
                                 placeholder='Search anime...'
                                 value={search}
                                 onChange={handleChange}
-                                variants={{
-                                    open: { padding: '8px' },
-                                    close: { padding: '0px' }
-                                }}
                             />
                         </form>
-                        <button className='p-1.5 rounded-lg group hover:bg-card' onClick={() => { setOpen(!isOpen); inputRef.current?.focus() }}>
+                        <button className='min-w-10 min-h-10 flex items-center justify-center rounded-lg group hover:bg-card' onClick={() => { setOpen(!isOpen); inputRef.current?.focus() }}>
                             <Icon icon="gravity-ui:magnifier" className='w-6 h-6 text-foreground group-hover:text-white' />
                         </button>
                         {isOpen && <div className='z-[100] w-[50vw] min-h-[70px] overflow-auto bg-card absolute top-[125%] left-0 rounded-md -mt-2 flex flex-col justify-center'>

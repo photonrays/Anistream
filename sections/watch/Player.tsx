@@ -16,7 +16,7 @@ export default function Player({ streamSources }: PlayerProps) {
     return (
         <ArtPlayer
             option={{
-                url: `http://localhost:8080/${streamSources?.sources?.[0].url}`,
+                url: streamSources?.sources?.[0].url,
                 subtitle: {
                     url:
                         streamSources.tracks !== undefined

@@ -58,16 +58,16 @@ const Menu = () => {
                         name="Genres"
                         button={<Icon icon="typcn:th-list" className="stroke-inherit stroke-[0.75] w-8" />}
                     >
-                        <div className="w-[130px] xs:w-[300px] max-h-[50vh] grid grid-cols-1 xs:grid-cols-3 gap-2 overflow-auto p-2">
-                            {animeHome?.genres.map((genre, index) => <Link href={`/list?genre=${genre.replace(/\s/g, '-').toLowerCase()}`} key={index} className="text-sm bg-card-light py-1 px-2 rounded-lg overflow-hidden line-clamp-1">{genre}</Link>)}
+                        <div className="w-[130px] xs:w-[300px] max-h-[50vh] grid grid-cols-1 xs:grid-cols-3 gap-2 overflow-auto p-2 bg-background rounded-lg">
+                            {animeHome?.genres.map((genre, index) => <Link href={`/list?genre=${genre.replace(/\s/g, '-').toLowerCase()}`} key={index} className="text-sm bg-card-light text-foreground py-1 px-2 rounded-lg overflow-hidden line-clamp-1">{genre}</Link>)}
                         </div>
                     </ExtensiveMenuItem>
                     <ExtensiveMenuItem
                         name="Types"
                         button={<Icon icon="ic:baseline-movie-creation" className="stroke-inherit stroke-[0.75] w-8" />}
                     >
-                        <div className="w-[120px] max-h-[50vh] grid grid-cols-1 gap-2 overflow-auto p-2">
-                            {types.map((type, index) => <Link href={`/list?category=${type.value}`} key={index} className="text-sm bg-card-light py-1 px-2 rounded-lg overflow-hidden line-clamp-1">{type.label}</Link>)}
+                        <div className="w-[120px] max-h-[50vh] grid grid-cols-1 gap-2 overflow-auto p-2 bg-background rounded-lg">
+                            {types.map((type, index) => <Link href={`/list?category=${type.value}`} key={index} className="text-sm bg-card-light text-foreground py-1 px-2 rounded-lg overflow-hidden line-clamp-1">{type.label}</Link>)}
                         </div>
                     </ExtensiveMenuItem>
                 </div>
