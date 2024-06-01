@@ -11,6 +11,7 @@ import AnimeInfo from "@/sections/watch/AnimeInfo";
 import { getAnimeEpisodes, getAnimeEpisodesServers, getAnimeInfoById, getAnimeStreamSources } from "@/services/aniwatch/api";
 import { DubEpisode, RawEpisode, SubEpisode } from "@/services/aniwatch/types/anime";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
+import { useWatchHistory } from "@/hooks/useWatchHistory";
 
 interface WatchProps {
     params: {
@@ -27,6 +28,7 @@ export interface ServerProps {
 export default function Watch({ params, searchParams }: WatchProps) {
     const [episodeId, setEpisodeId] = useState<string | undefined>(searchParams?.ep ? `${params.id}?ep=${searchParams?.ep}` : undefined)
     const [server, setServer] = useState<ServerProps>({ serverName: undefined, category: undefined })
+    const { watchHistory, getLatestEpisode, addToWatchHistory, getWatchedEpisodes } = useWatchHistory()
 
     const [
         { data: episodeList },
@@ -43,10 +45,16 @@ export default function Watch({ params, searchParams }: WatchProps) {
     })
 
     useEffect(() => {
-        if (!episodeId && episodeList && episodeList.episodes[episodeList.episodes.length - 1]?.episodeId) {
+        if (searchParams?.ep) {
+            if (!watchHistory[params.id] || !watchHistory[params.id][searchParams.ep]) {
+                addToWatchHistory(params.id, searchParams.ep)
+            }
+        } else if (getLatestEpisode(params.id)) {
+            redirect(`/watch/${params.id}?ep=${getLatestEpisode(params.id)}`)
+        } else if (episodeList && episodeList.episodes[episodeList.episodes.length - 1]?.episodeId) {
             redirect(`/watch/${episodeList.episodes[episodeList.episodes.length - 1].episodeId}`)
         }
-    }, [episodeId, episodeList])
+    }, [searchParams?.ep, episodeList])
 
     useEffect(() => {
         setEpisodeId(searchParams?.ep ? `${params.id}?ep=${searchParams?.ep}` : undefined)
@@ -76,11 +84,11 @@ export default function Watch({ params, searchParams }: WatchProps) {
                 <BreadcrumbItem href={`/watch/${params.id}`}>{animeInfo?.anime.info.name}</BreadcrumbItem>
             </Breadcrumbs>
             <div className="w-full h-full p-4 grid grid-cols-1 lg:grid-cols-[800px_1fr] xl:grid-cols-[1fr_800px_1fr] gap-4 mb-4">
-                <Episodes episodeId={episodeId} episodeList={episodeList} />
+                <Episodes episodeId={episodeId} episodeList={episodeList} watchedEpisodeIds={getWatchedEpisodes(params.id)} />
                 <div>
                     <Player key={`${episodeId}-${server.serverName}-${server.category}`} streamSources={streamSources} />
                     <ServerList serverList={serverList} handleChangeServer={handleChangeServer} server={server} />
-                    <EpisodesMobile episodeId={episodeId} episodeList={episodeList} />
+                    <EpisodesMobile episodeId={episodeId} episodeList={episodeList} watchedEpisodeIds={getWatchedEpisodes(params.id)} />
                 </div>
                 <Related animeInfo={animeInfo?.relatedAnimes} />
             </div>

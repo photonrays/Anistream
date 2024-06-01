@@ -18,7 +18,7 @@ export default function PopularCard({ anime }: { anime: SpotlightAnime }) {
                 <Link href={`/watch/${anime.id}`} className='block'>
                     <Button
                         color="primary"
-                        className="hover:bg-primary-light font-semibold px-6 text-lg"
+                        className="hover:bg-primary/80 font-semibold px-6 text-lg"
                     >
                         <Icon icon="solar:play-bold" />Watch Now
                     </Button>
@@ -37,7 +37,7 @@ export default function PopularCard({ anime }: { anime: SpotlightAnime }) {
                 <Link href={`/watch/${anime.id}`} className='block'>
                     <Button
                         color="primary"
-                        className="hover:bg-primary-light font-semibold xs:px-6 xs:text-lg"
+                        className="hover:bg-primary/80 font-semibold xs:px-6 xs:text-lg"
                     >
                         <Icon icon="solar:play-bold" />Watch Now
                     </Button>
