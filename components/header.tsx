@@ -10,6 +10,7 @@ import { getAnimeSearchSuggestions } from '@/services/aniwatch/api';
 import { useRouter } from 'next/navigation';
 import { CircularProgress } from '@nextui-org/react';
 import ThemeSwitcher from './ThemeSwitcher';
+import ProfileButton from './ProfileButton';
 
 
 export default function Header() {
@@ -116,6 +117,7 @@ export default function Header() {
                         </div>}
                     </motion.div>
                     <ThemeSwitcher />
+                    <ProfileButton />
                 </div>
             </motion.div>
         </>
