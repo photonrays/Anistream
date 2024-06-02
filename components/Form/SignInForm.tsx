@@ -1,76 +1,62 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from '@nextui-org/react';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useToast } from '../toaster/use-toast';
+import { useRouter } from 'next/navigation';
+import { useToast } from '../Toaster/use-toast';
 import { Icon, GoogleSignin } from '@/components'
 
-const FormSchema = z
-    .object({
-        email: z.string().min(1, 'Email is required').email('Invalid email'),
-        username: z.string().min(1, 'Username is required').max(20, 'Username must be less than 20 characters'),
-        password: z.string()
-            .min(1, 'Password is required')
-            .min(8, 'Password must be at least 8 characters'),
-        confirmPassword: z.string().min(1, 'Password confirmation is required'),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        path: ['confirmPassword'],
-        message: 'Password do not match',
-    });
+const FormSchema = z.object({
+    email: z.string().min(1, 'Email is required').email('Invalid email'),
+    password: z
+        .string()
+        .min(1, 'Password is required')
+        .min(8, 'Password must have than 8 characters'),
+});
 
-const SignUpForm = () => {
+const SignInForm = () => {
     const router = useRouter();
     const { toast } = useToast()
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            username: '',
             email: '',
             password: '',
-            confirmPassword: '',
         },
     });
-
     const [isVisible, setIsVisible] = useState(false);
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
     const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-        const response = await fetch('/api/user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: data.username,
-                email: data.email,
-                password: data.password,
-            }),
-        })
+        const signInData = await signIn('credentials', {
+            email: data.email,
+            password: data.password,
+            redirect: false
+        });
 
-        if (response.ok) {
-            router.push('/sign-in')
-        } else {
+        if (signInData?.error) {
             toast({
                 title: 'Error',
                 description: 'Oops! Something went wrong!',
                 variant: 'destructive',
+
             })
+        } else {
+            router.push('/')
         }
     };
-
 
     return (
         <div className='w-full min-w-[320px] flex flex-col gap-6'>
             <div>
-                <h2 className='text-2xl font-semibold mb-2'>Get started</h2>
-                <p className='text-sm'>Create a new account</p>
+                <h2 className='text-2xl font-semibold mb-2'>Welcome back</h2>
+                <p className='text-sm'>Sign in to your account</p>
             </div>
 
             <div className='w-full'>
@@ -84,19 +70,6 @@ const SignUpForm = () => {
             </div>
 
             <form className='flex flex-col gap-3' onSubmit={form.handleSubmit(onSubmit)}>
-                <div>
-                    <label className='mb-2 block text-sm'>Username</label>
-                    <Input
-                        variant="bordered"
-                        radius='sm'
-                        type="text"
-                        placeholder="username"
-                        labelPlacement="outside"
-                        isInvalid={!!form.formState.errors.username}
-                        errorMessage={form.formState.errors.username?.message}
-                        {...form.register('username')}
-                    />
-                </div>
                 <div>
                     <label className='mb-2 block text-sm'>Email</label>
                     <Input
@@ -133,28 +106,15 @@ const SignUpForm = () => {
                         type={isVisible ? "text" : "password"}
                     />
                 </div>
-                <div>
-                    <label className='mb-2 block text-sm'>Confirm Password</label>
-                    <Input
-                        variant="bordered"
-                        radius='sm'
-                        type='password'
-                        placeholder="●●●●●●●●"
-                        labelPlacement="outside"
-                        isInvalid={!!form.formState.errors.confirmPassword}
-                        errorMessage={form.formState.errors.confirmPassword?.message}
-                        {...form.register('confirmPassword')}
-                    />
-                </div>
                 <Button
                     className='mt-4'
                     color='primary'
-                    onClick={form.handleSubmit(onSubmit)}>Sign Up</Button>
+                    onClick={form.handleSubmit(onSubmit)}>Sign In</Button>
 
-                <p className='text-sm text-center mt-4'>Have an account? <Link href={'/sign-in'} className='text-primary'>Sign In Now</Link></p>
+                <p className='text-sm text-center mt-4'>Don&apos;t have an account? <Link href={'/sign-up'} className='text-primary'>Sign Up Now</Link></p>
             </form>
         </div>
     );
 };
 
-export default SignUpForm;
+export default SignInForm;

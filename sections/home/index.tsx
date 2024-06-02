@@ -1,8 +1,8 @@
-export { default as OtherAnime } from './other-anime';
-export { OtherAnimeLoading } from './other-anime';
-export { default as RecentAnime } from './recent-anime';
-export { RecentAnimeLoading } from './recent-anime';
-export { default as TopAnime } from './top-anime';
-export { TopAnimeLoading } from './top-anime';
-export { default as TrendingAnime } from './trending-anime';
-export { TrendingAnimeLoading } from './trending-anime';
+export { default as OtherAnime } from './OtherAnime';
+export { OtherAnimeLoading } from './OtherAnime';
+export { default as RecentAnime } from './RecentAnime';
+export { RecentAnimeLoading } from './RecentAnime';
+export { default as TopAnime } from './TopAnime';
+export { TopAnimeLoading } from './TopAnime';
+export { default as TrendingAnime } from './TrendingAnime';
+export { TrendingAnimeLoading } from './TrendingAnime';

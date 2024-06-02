@@ -1,4 +1,6 @@
-export { default as AnimeInfo } from './anime-info';
+export { default as AnimeInfo } from './AnimeInfo';
 export { default as Episodes } from './episodes';
-export { default as EpisodesMobile } from './episodes-mobile';
-export { default as ServerList } from './server-list';
+export { default as EpisodesMobile } from './EpisodesMobile';
+export { default as ServerList } from './ServerList';
+export { default as Related } from './Related';
+export { default as Player } from './Player';

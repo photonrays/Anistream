@@ -6,9 +6,7 @@ import { getAnimeEpisodes, getAnimeEpisodesServers, getAnimeInfoById, getAnimeSt
 import { DubEpisode, RawEpisode, SubEpisode } from "@/services/aniwatch/types/anime";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import { useWatchHistory } from "@/hooks/useWatchHistory";
-import { AnimeInfo, Episodes, EpisodesMobile, ServerList } from "@/sections/watch";
-import Player from "@/sections/watch/Player";
-import Related from "@/sections/watch/Related";
+import { AnimeInfo, Episodes, EpisodesMobile, ServerList, Player, Related } from "@/sections/watch";
 
 interface WatchProps {
     params: {

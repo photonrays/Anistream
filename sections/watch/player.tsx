@@ -1,4 +1,4 @@
-import ArtPlayer from '@/components/artplayer'
+import ArtPlayer from '@/components/Artplayer'
 import { AnimeEpisodesSources } from '@/services/aniwatch/types/parsers'
 import { CircularProgress } from '@nextui-org/react'
 import type Artplayer from 'artplayer'
