@@ -1,7 +1,6 @@
-import PopularCard from "@/components/PopularCard";
-import CustomSlider from "@/components/CustomSlider/CustomSlider";
 import { Skeleton } from '@nextui-org/react'
 import { getAnimeHomePage } from "@/services/aniwatch/api";
+import { CustomSlider, PopularCard } from '@/components';
 
 export function TrendingAnimeLoading() {
     return (

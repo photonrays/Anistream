@@ -1,17 +1,14 @@
 'use client'
-import ServerList from "@/sections/watch/ServerList";
 import { useQueries } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
-import Player from "@/sections/watch/Player";
-import Episodes from "@/sections/watch/Episodes";
-import EpisodesMobile from "@/sections/watch/EpisodesMobile";
-import Related from "@/sections/watch/Related";
-import AnimeInfo from "@/sections/watch/AnimeInfo";
 import { getAnimeEpisodes, getAnimeEpisodesServers, getAnimeInfoById, getAnimeStreamSources } from "@/services/aniwatch/api";
 import { DubEpisode, RawEpisode, SubEpisode } from "@/services/aniwatch/types/anime";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import { useWatchHistory } from "@/hooks/useWatchHistory";
+import { AnimeInfo, Episodes, EpisodesMobile, ServerList } from "@/sections/watch";
+import Player from "@/sections/watch/Player";
+import Related from "@/sections/watch/Related";
 
 interface WatchProps {
     params: {

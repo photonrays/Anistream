@@ -1,6 +1,5 @@
 'use client'
 import { Tab, Tabs } from '@nextui-org/react'
-import React from 'react'
 
 interface CustomTabProps extends React.ComponentProps<typeof Tabs> {
     tabs: {

@@ -1,4 +1,3 @@
-import React from 'react'
 
 export default function AnimeInfoDetail({ title, detail }: { title: string, detail: React.ReactNode }) {
     return (

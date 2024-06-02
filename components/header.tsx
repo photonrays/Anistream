@@ -2,18 +2,18 @@
 import React, { useRef, useState } from 'react'
 import { easeInOut, motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
-import Icon from './Icon';
-import SearchCard from './SearchCard';
+import Icon from './icon';
+import SearchCard from './search-card';
 import { useDebounce } from "@uidotdev/usehooks";
 import { useQuery } from '@tanstack/react-query';
 import { getAnimeSearchSuggestions } from '@/services/aniwatch/api';
 import { useRouter } from 'next/navigation';
 import { CircularProgress } from '@nextui-org/react';
-import ThemeSwitcher from './ThemeSwitcher';
-import ProfileButton from './ProfileButton';
+import ThemeSwitcher from './theme-switcher';
+import ProfileButton from './profile-button';
 
 
-export default function Header() {
+export default function Header({ isFullOption = true }: { isFullOption?: boolean }) {
     const { scrollY } = useScroll()
     const [isOpen, setOpen] = useState(false)
     const [search, setSearch] = useState<string>("");
@@ -81,11 +81,11 @@ export default function Header() {
             {isOpen && <div className="w-full h-screen bg-background/40 backdrop-blur-sm fixed z-[97]" onClick={() => setOpen(false)}></div>}
             <motion.div
                 style={{ background, backdropFilter: filter, WebkitBackdropFilter: filter }}
-                className='w-full h-[72px] flex items-center justify-between fixed top-0 z-[98] py-2 pl-20 pr-5'
+                className='w-full h-[72px] flex items-center justify-between fixed top-0 z-[98] py-2 pr-5'
             >
-                <Link href={'/'} className='hidden sm:block text-foreground'>Anistream</Link>
+                <Link href={'/'} className={`${isFullOption ? 'pl-20' : 'pl-5'} hidden sm:block text-foreground`}>Anistream</Link>
                 <div className='ml-auto flex items-center relative gap-1'>
-                    <motion.div
+                    {isFullOption && <motion.div
                         variants={containerVariants}
                         animate={isOpen ? "open" : "close"}
                         initial="close"
@@ -115,9 +115,9 @@ export default function Header() {
                                             <Link href={`/`} className="flex items-center mx-3 pt-1 pb-2 hover:text-primary-light border-t-1 border-foreground-darker border-dashed"><span className="mr-2">Advanced search</span><Icon icon="ph:arrow-right-bold" /></Link>
                                         </div>))}
                         </div>}
-                    </motion.div>
+                    </motion.div>}
                     <ThemeSwitcher />
-                    {/* <ProfileButton /> */}
+                    {isFullOption && <ProfileButton />}
                 </div>
             </motion.div>
         </>

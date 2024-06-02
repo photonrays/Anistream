@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Icon from "../Icon"
+import Icon from "../icon"
 import { motion, useCycle } from "framer-motion";
 
 

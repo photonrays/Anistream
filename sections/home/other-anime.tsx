@@ -1,11 +1,6 @@
-import DetailCard from '@/components/DetailCard'
-import Icon from '@/components/Icon'
-import { Anime, TopUpcomingAnime } from '@/services/aniwatch/types/anime'
-import { Button } from '@nextui-org/react'
 import Link from 'next/link'
-import React from 'react'
-import DetailCardLoading from '@/components/DetailCardLoading'
 import { getAnimeByCategory, getAnimeHomePage } from '@/services/aniwatch/api'
+import { DetailCard, DetailCardLoading, Icon } from '@/components'
 
 export async function OtherAnimeLoading() {
     return (

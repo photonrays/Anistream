@@ -1,8 +1,7 @@
-import React from 'react'
 import { Card as NextCard, CardBody, CardFooter, Chip, Image, Skeleton } from '@nextui-org/react';
 import Link from 'next/link';
 import { Anime } from '@/services/aniwatch/types/anime';
-import Icon from './Icon';
+import Icon from './icon';
 
 export default function Card({ anime }: { anime?: Anime }) {
     if (!anime) return (

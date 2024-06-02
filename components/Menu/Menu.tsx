@@ -1,9 +1,9 @@
 'use client'
 import { motion, useCycle } from "framer-motion"
-import MenuItem from "./MenuItem"
-import ExtensiveMenuItem from "./ExtensiveMenuItem"
-import Icon from "../Icon"
-import { MenuToggle } from "./MenuToogle"
+import MenuItem from "./menu-item"
+import ExtensiveMenuItem from "./extensive-menu-item"
+import Icon from "../icon"
+import { MenuToggle } from "./menu-toogle"
 import { useQuery } from "@tanstack/react-query"
 import { getAnimeHomePage } from "@/services/aniwatch/api"
 import Link from "next/link"

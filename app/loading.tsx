@@ -1,5 +1,4 @@
 import { Card, CardBody, CardFooter, Skeleton } from '@nextui-org/react'
-import React from 'react'
 
 export default function loading() {
     return (

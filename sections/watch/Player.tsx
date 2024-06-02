@@ -1,8 +1,8 @@
-import { ArtPlayer } from '@/components'
+import ArtPlayer from '@/components/artplayer'
 import { AnimeEpisodesSources } from '@/services/aniwatch/types/parsers'
 import { CircularProgress } from '@nextui-org/react'
 import type Artplayer from 'artplayer'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface PlayerProps {
     streamSources?: AnimeEpisodesSources,

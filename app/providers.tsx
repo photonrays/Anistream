@@ -1,7 +1,6 @@
 // app/providers.tsx
 "use client";
 
-import Layout from '@/components/layout';
 import { NextUIProvider } from '@nextui-org/react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { Session } from 'next-auth';

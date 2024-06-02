@@ -1,19 +1,15 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { signIn, signOut, useSession, getProviders, LiteralUnion, ClientSafeProvider } from 'next-auth/react'
-import Link from 'next/link';
-import Image from 'next/image';
-import { BuiltInProviderType } from 'next-auth/providers/index';
+import { signOut, useSession } from 'next-auth/react'
 import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function ProfileButton() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter()
-  const loading = status === 'loading'
 
   return (
-    <div className='sm:flex hidden'>
+    <div className='flex'>
       {session ? (
         <div className='flex gap-3 md:gap-5'>
           <Dropdown placement="bottom-end">
@@ -27,7 +23,7 @@ export default function ProfileButton() {
             <DropdownMenu aria-label="Profile Actions" variant="flat">
               <DropdownItem key="profile" className="h-14 gap-2">
                 <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">zoey@example.com</p>
+                <p className="font-semibold">{session.user.username}</p>
               </DropdownItem>
               <DropdownItem key="settings">
                 My Settings
@@ -42,7 +38,6 @@ export default function ProfileButton() {
                 Help & Feedback
               </DropdownItem>
               <DropdownItem
-                href={`/api/signout`}
                 key="logout"
                 color="danger"
                 onClick={(e) => {
@@ -50,26 +45,22 @@ export default function ProfileButton() {
                   signOut();
                   router.push("/");
                 }}>
-                Log Out
+                Sign Out
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </div>
       ) : (
         <>
-          <Button
-            href={`/api/auth/signin`}
-            color='primary'
-            radius='sm'
-            variant="solid"
-            className='px-0 h-10 bg-card'
-            onClick={(e) => {
-              e.preventDefault();
-              signIn();
-            }}
-          >
-            Sign in
-          </Button>
+          <Link href={`/sign-in`}>
+            <Button
+              radius='sm'
+              variant="solid"
+              className='px-0 h-10 bg-card text-foreground'
+            >
+              Sign in
+            </Button>
+          </Link>
         </>
       )}
     </div>

@@ -1,9 +1,6 @@
-import React from 'react'
-import TopCard from '@/components/TopCard';
 import { Button, Link } from '@nextui-org/react';
-import CustomTab from '@/components/CustomTab';
-import TopCardLoading from '@/components/TopCardLoading';
 import { getAnimeHomePage } from '@/services/aniwatch/api';
+import { CustomTab, TopCard, TopCardLoading } from '@/components';
 
 export async function TopAnimeLoading() {
     return (

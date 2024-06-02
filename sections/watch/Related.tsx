@@ -1,6 +1,5 @@
 import { DetailCard } from '@/components'
 import { RelatedAnime } from '@/services/aniwatch/types/anime'
-import React from 'react'
 
 export default function Related({ animeInfo }: { animeInfo?: RelatedAnime[] }) {
     return (

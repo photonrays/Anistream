@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
                 email: { label: "Email", type: "email", placeholder: "john@mail.com" },
                 password: { label: "Password", type: "password" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials): Promise<any> {
                 if (!credentials?.email || !credentials?.password) {
                     return null
                 }
@@ -26,7 +26,6 @@ export const authOptions: NextAuthOptions = {
                 if (!existingUser) {
                     return null
                 }
-
                 const passwordMatch = await compare(credentials.password, existingUser.password)
                 if (!passwordMatch) {
                     return null
@@ -48,13 +47,28 @@ export const authOptions: NextAuthOptions = {
         signIn: '/sign-in',
     },
     adapter: PrismaAdapter(db as PrismaClient) as Adapter,
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
     },
     callbacks: {
-        async session({ session, user }) {
-            session.user = user
-            return session
+        async jwt({ token, user }) {
+            if (user) {
+                return {
+                    ...token,
+                    username: user.username
+                }
+            }
+            return token
+        },
+        async session({ session, token }) {
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    username: token.username
+                }
+            }
         }
     },
     events: {

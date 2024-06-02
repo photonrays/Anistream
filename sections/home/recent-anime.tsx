@@ -1,7 +1,5 @@
-import React from 'react'
-import Card from '@/components/Card';
+import { Card, CustomTab } from '@/components';
 import { Button, Link } from '@nextui-org/react';
-import CustomTab from '@/components/CustomTab';
 import { Card as NextCard, CardBody, CardFooter, Skeleton } from '@nextui-org/react'
 import { getAnimeByCategory, getAnimeHomePage } from '@/services/aniwatch/api';
 

@@ -1,7 +1,5 @@
-import TrendingAnime, { TrendingAnimeLoading } from "@/sections/home/TrendingAnime";
-import TopAnime, { TopAnimeLoading } from "@/sections/home/TopAnime";
-import RecentAnime, { RecentAnimeLoading } from "@/sections/home/RecentAnime";
-import OtherAnime, { OtherAnimeLoading } from "@/sections/home/OtherAnime";
+
+import { OtherAnime, OtherAnimeLoading, RecentAnime, RecentAnimeLoading, TopAnime, TopAnimeLoading, TrendingAnime, TrendingAnimeLoading } from "@/sections/home";
 import { Suspense } from "react";
 
 export default function Home() {

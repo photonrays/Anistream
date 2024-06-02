@@ -1,6 +1,5 @@
 import { AnimeEpisodes } from '@/services/aniwatch/types/parsers'
 import Link from 'next/link'
-import React from 'react'
 
 interface EpisodesProps {
     episodeList?: AnimeEpisodes

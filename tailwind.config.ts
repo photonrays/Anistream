@@ -73,12 +73,12 @@ const config: Config = {
           },
           primary: {
             DEFAULT: "rgba(var(--primary))",
-            foreground: "rgba(200, 200, 200)",
+            foreground: "rgba(225, 225, 225)",
             background: "rgba(14, 14, 14)",
           },
           secondary: {
             DEFAULT: "rgba(var(--secondary))",
-            foreground: "rgba(200, 200, 200)",
+            foreground: "rgba(225, 225, 225)",
             background: "rgba(14, 14, 14)",
           },
           focus: "rgba(var(--primary-light))",

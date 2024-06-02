@@ -1,6 +1,5 @@
-import { ServerProps } from '@/app/watch/[id]/page'
+import { ServerProps } from '@/app/(main)/watch/[id]/page'
 import { EpisodeServers } from '@/services/aniwatch/types/parsers'
-import React from 'react'
 
 interface ServerListProps {
     serverList?: EpisodeServers,

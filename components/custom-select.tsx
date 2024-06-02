@@ -1,4 +1,4 @@
-import { Select, SelectItem } from "@nextui-org/select"; import React from 'react'
+import { Select, SelectItem } from "@nextui-org/select";
 
 interface selectType {
     label: string;

@@ -1,16 +1,14 @@
 'use client'
-import { Card } from '@/components'
-import Icon from '@/components/Icon'
+import { Card, CustomSelect, Icon } from '@/components'
 import { getAnimeAdvancedResults, getAnimeHomePage } from '@/services/aniwatch/api'
 import { AnimeSearchQueryParams } from '@/services/aniwatch/types/controllers'
 import { buildQueryString } from '@/services/aniwatch/util'
 import { BreadcrumbItem, Breadcrumbs, Button, CircularProgress, Pagination } from '@nextui-org/react'
 import { useQueries } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion, useCycle } from 'framer-motion';
 import { types, languages, rated, scores, seasons, sorts, statuses } from '@/data/anime'
-import CustomSelect from '@/components/CustomSelect'
 
 
 export default function Search({ searchParams }: { searchParams: AnimeSearchQueryParams }) {
@@ -115,7 +113,7 @@ export default function Search({ searchParams }: { searchParams: AnimeSearchQuer
                                 return <Button
                                     size='sm'
                                     key={idx}
-                                    className={`${selectedGenres.includes(_genre) ? 'bg-primary' : 'bg-card-light'}  hover:bg-primary`}
+                                    className={`${selectedGenres.includes(_genre) ? 'bg-primary text-white' : 'bg-card-light'}  hover:bg-primary hover:text-white`}
                                     onClick={() => setGenres(prev => prev.includes(_genre) ? prev.filter(g => g !== _genre) : [...prev, _genre])}
                                 >
                                     {genre}
