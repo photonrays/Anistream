@@ -1,4 +1,5 @@
-import { Footer, Header, Menu } from "@/components";
+import { Footer, Header } from "@/components";
+import Menu from "@/components/menu/menu";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
