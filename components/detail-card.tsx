@@ -1,7 +1,7 @@
 import { Card, CardBody, Chip, Image, Skeleton } from '@nextui-org/react'
 import Link from 'next/link';
 import { Anime, RelatedAnime } from '@/services/aniwatch/types/anime';
-import Icon from './icon';
+import { Icon } from '@/components';
 
 
 export function DetailCardLoading() {

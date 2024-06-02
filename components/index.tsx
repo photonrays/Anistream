@@ -1,7 +1,7 @@
 export { default as CustomSlider } from './custom-slider/custom-slider';
 export { default as SignInForm } from './form/sign-in-form';
 export { default as SignUpForm } from './form/sign-up-form';
-export { default as Menu } from './menu/menu'
+export { default as Menu } from '@/components/menu/menu';
 export { default as PopularCard } from './popular-card';
 export { default as CustomSelect } from './custom-select';
 export { default as Card } from './card';

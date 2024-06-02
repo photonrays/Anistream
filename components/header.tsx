@@ -1,16 +1,13 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { easeInOut, motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
-import Icon from './icon';
-import SearchCard from './search-card';
 import { useDebounce } from "@uidotdev/usehooks";
 import { useQuery } from '@tanstack/react-query';
 import { getAnimeSearchSuggestions } from '@/services/aniwatch/api';
 import { useRouter } from 'next/navigation';
 import { CircularProgress } from '@nextui-org/react';
-import ThemeSwitcher from './theme-switcher';
-import ProfileButton from './profile-button';
+import { Icon, ProfileButton, SearchCard, ThemeSwitcher, } from '@/components'
 
 
 export default function Header({ isFullOption = true }: { isFullOption?: boolean }) {

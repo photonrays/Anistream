@@ -5,12 +5,11 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from '@nextui-org/react';
 import { useState } from 'react';
-import Icon from '../icon';
 import { signIn } from 'next-auth/react';
-import GoogleSignin from '../google-signin';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useToast } from '../toaster/use-toast';
+import { Icon, GoogleSignin } from '@/components'
 
 const FormSchema = z.object({
     email: z.string().min(1, 'Email is required').email('Invalid email'),

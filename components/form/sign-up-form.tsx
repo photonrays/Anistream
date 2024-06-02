@@ -5,11 +5,10 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from '@nextui-org/react';
 import { useState } from 'react';
-import Icon from '../icon';
 import { useRouter } from 'next/navigation';
-import GoogleSignin from '../google-signin';
 import Link from 'next/link';
 import { useToast } from '../toaster/use-toast';
+import { Icon, GoogleSignin } from '@/components'
 
 const FormSchema = z
     .object({
@@ -62,7 +61,6 @@ const SignUpForm = () => {
                 title: 'Error',
                 description: 'Oops! Something went wrong!',
                 variant: 'destructive',
-
             })
         }
     };

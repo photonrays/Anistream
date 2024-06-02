@@ -27,7 +27,6 @@
     "hls.js": "^1.5.8",
     "html-react-parser": "^5.1.10",
     "lru-cache": "^10.2.2",
-    "mongoose": "^8.4.1",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
     "next-themes": "^0.3.0",
