@@ -5,7 +5,7 @@ export { default as Menu } from '@/components/menu/menu';
 export { default as PopularCard } from './popular-card';
 export { default as CustomSelect } from './custom-select';
 export { default as Card } from './card';
-export { default as Icon } from './icon';
+export { default as Icon } from './Icon';
 export { default as AnimeInfoDetail } from './anime-info-detail';
 export { default as CustomTab } from './custom-tab';
 export { default as DetailCard } from './detail-card';

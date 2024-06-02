@@ -3,7 +3,7 @@ import { Button, Chip } from '@nextui-org/react'
 import parse from 'html-react-parser';
 import { SpotlightAnime } from '@/services/aniwatch/types/anime';
 import Link from 'next/link';
-import Icon from './icon';
+import { Icon } from '@/components';
 
 export default function PopularCard({ anime }: { anime: SpotlightAnime }) {
     return (

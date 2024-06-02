@@ -1,7 +1,7 @@
 import { Image } from '@nextui-org/react'
 import Link from 'next/link'
 import { AnimeSearchSuggestion } from '@/services/aniwatch/types/anime'
-import Icon from './icon'
+import { Icon } from '@/components'
 
 export default function SearchCard({ anime }: { anime?: AnimeSearchSuggestion }) {
     if (!anime) return null

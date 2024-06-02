@@ -2,7 +2,7 @@
 import { motion, useCycle } from "framer-motion"
 import MenuItem from "./menu-item"
 import ExtensiveMenuItem from "./extensive-menu-item"
-import Icon from "../icon"
+import Icon from "../Icon"
 import { MenuToggle } from "./menu-toogle"
 import { useQuery } from "@tanstack/react-query"
 import { getAnimeHomePage } from "@/services/aniwatch/api"

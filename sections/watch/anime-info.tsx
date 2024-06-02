@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
 import { AnimeAboutInfo } from '@/services/aniwatch/types/parsers'
-import Icon from '@/components/icon'
+import Icon from '@/components/Icon'
 
 export default function AnimeInfo({ animeInfo }: { animeInfo?: AnimeAboutInfo }) {
     const [descriptionExpand, setDescriptionExpand] = useState(false)

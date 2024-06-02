@@ -1,6 +1,6 @@
 import { Card, CardBody, Chip, Image, Skeleton } from '@nextui-org/react'
 import { Top10Anime } from '@/services/aniwatch/types/anime';
-import Icon from './icon';
+import { Icon } from '@/components';
 import Link from 'next/link';
 
 export function TopCardLoading() {
