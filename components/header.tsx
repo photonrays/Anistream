@@ -117,7 +117,7 @@ export default function Header() {
                         </div>}
                     </motion.div>
                     <ThemeSwitcher />
-                    <ProfileButton />
+                    {/* <ProfileButton /> */}
                 </div>
             </motion.div>
         </>
