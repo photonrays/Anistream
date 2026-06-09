@@ -10,7 +10,7 @@
 
 Anistream is a modern, responsive Anime streaming platform crafted specifically for anime enthusiasts. Built with Next.js and the NextUI ecosystem, it delivers a high-performance, seamless viewing experience. The platform features a sleek, intuitive interface designed to put content front and center. Users can easily navigate through a dynamic hero showcase for top releases, browse recently updated episodes with quick "Sub" and "Dub" filtering, and track trending shows via daily, weekly, and monthly leaderboards.
 
-![Anistream Interface](preview.jpg)
+![Anistream Interface](preview.png)
 
 **Live Demo:** [https://anistream-iota.vercel.app](https://anistream-iota.vercel.app)
 
